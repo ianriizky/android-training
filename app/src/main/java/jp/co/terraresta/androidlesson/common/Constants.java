@@ -54,7 +54,6 @@ public class Constants {
     public static final String REQUEST_NAME_MESSAGE = "message";
     public static final String REQUEST_NAME_IMAGE_ID = "image_id";
     public static final String REQUEST_NAME_VIDEO_ID = "video_id";
-    public static final String REQUEST_NAME_LOCATION_FLAG = "location_flag";
     public static final String REQUEST_NAME_DATA = "data";
     public static final String REQUEST_NAME_BIRTHDAY = "birthday";
     public static final String REQUEST_NAME_RESIDENCE = "residence";
