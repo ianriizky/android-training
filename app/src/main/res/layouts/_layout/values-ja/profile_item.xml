@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sex">
+        <item>指定なし_0</item>
+        <item>男性_1</item>
+        <item>女性_2</item>
+    </string-array>
+    <string-array name="job">
+        <item>指定なし_0</item>
+        <item>会社員_1</item>
+        <item>自営業_2</item>
+        <item>公務員_3</item>
+        <item>専門学校生_4</item>
+        <item>大学生_5</item>
+        <item>飲食関連_6</item>
+        <item>医師_7</item>
+        <item>看護師_8</item>
+        <item>美容･エステ系_9</item>
+        <item>広告関連_10</item>
+        <item>IT･システムWEB系_11</item>
+        <item>金融･保険関連_12</item>
+        <item>不動産関連_13</item>
+        <item>その他_14</item>
+    </string-array>
+    <string-array name="residence">
+        <item>北海道</item>
+        <item>青森</item>
+        <item>秋田</item>
+        <item>岩手</item>
+        <item>山形</item>
+        <item>宮城</item>
+        <item>福島</item>
+        <item>東京</item>
+        <item>神奈川</item>
+        <item>千葉</item>
+        <item>埼玉</item>
+        <item>茨城</item>
+        <item>群馬</item>
+        <item>栃木</item>
+        <item>長野</item>
+        <item>山梨</item>
+        <item>新潟</item>
+        <item>富山</item>
+        <item>石川</item>
+        <item>福井</item>
+        <item>愛知</item>
+        <item>三重</item>
+        <item>岐阜</item>
+        <item>静岡</item>
+        <item>大阪</item>
+        <item>兵庫</item>
+        <item>京都</item>
+        <item>奈良</item>
+        <item>滋賀</item>
+        <item>和歌山</item>
+        <item>広島</item>
+        <item>岡山</item>
+        <item>山口</item>
+        <item>鳥取</item>
+        <item>島根</item>
+        <item>愛媛</item>
+        <item>香川</item>
+        <item>徳島</item>
+        <item>高知</item>
+        <item>福岡</item>
+        <item>佐賀</item>
+        <item>熊本</item>
+        <item>大分</item>
+        <item>長崎</item>
+        <item>宮崎</item>
+        <item>鹿児島</item>
+        <item>沖縄</item>
+    </string-array>
+    <string-array name="personality">
+        <item>指定なし_0</item>
+        <item>やさしい_1</item>
+        <item>明るい_2</item>
+        <item>面白い_3</item>
+        <item>クール_4</item>
+        <item>天然_5</item>
+        <item>甘えん坊_6</item>
+        <item>その他_7</item>
+    </string-array>
+    <string-array name="hobby">
+        <item>ドライブ_0</item>
+        <item>アニメ・漫画・ゲーム_1</item>
+        <item>スポーツ_2</item>
+        <item>カラオケ_3</item>
+        <item>ギャンブル_4</item>
+        <item>ショッピング_5</item>
+        <item>その他_6</item>
+    </string-array>
+</resources>

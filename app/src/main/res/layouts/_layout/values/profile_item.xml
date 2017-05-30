@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sex">
+        <item>Unselected_0</item>
+        <item>Male_1</item>
+        <item>Female_2</item>
+    </string-array>
+    <string-array name="job">
+        <item>Unselected_0</item>
+        <item>Employee_1</item>
+        <item>self employed_2</item>
+        <item>Civil servant_3</item>
+        <item>Vocational school student_4</item>
+        <item>College student_5</item>
+        <item>Food related_6</item>
+        <item>Doctor_7</item>
+        <item>Nurse_8</item>
+        <item>Beauty･Beauty_9</item>
+        <item>Advertisement related_10</item>
+        <item>IT･System WEB system_11</item>
+        <item>Finance･Insurance_12</item>
+        <item>Real estate related_13</item>
+        <item>Other_14</item>
+    </string-array>
+    <string-array name="residence">
+        <item>Unselected</item>
+        <item>Ubud</item>
+        <item>Seminyak</item>
+        <item>Kuta</item>
+        <item>Regian</item>
+        <item>Kerobokan</item>
+        <item>Sanur</item>
+        <item>Nusa Dua</item>
+        <item>Denpasar</item>
+        <item>Tuban</item>
+    </string-array>
+    <string-array name="personality">
+        <item>Unselected_0</item>
+        <item>Friendly_1</item>
+        <item>Bright_2</item>
+        <item>Funny_3</item>
+        <item>Cool_4</item>
+        <item>Natural_5</item>
+        <item>Spoiled_6</item>
+        <item>Other_7</item>
+    </string-array>
+    <string-array name="hobby">
+        <item>Drive_0</item>
+        <item>Anime･cartoon･game_1</item>
+        <item>Sports_2</item>
+        <item>karaoke_3</item>
+        <item>Gambling_4</item>
+        <item>Shopping_5</item>
+        <item>Other_6</item>
+    </string-array>
+</resources>

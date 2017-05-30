@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- common -->
+    <string name="app_name">AndroidLesson</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">close</string>
+    <string name="save">save</string>
+    <string name="edit">edit</string>
+
+    <string name="start_camera">Start up the camera</string>
+    <string name="select_photo_library">Select a photo</string>
+    <string name="select_movie_library">Select a video</string>
+    <string name="take_a_picture">Take a picture</string>
+    <string name="take_a_video">Take a video</string>
+    <string name="to_reset">To reset</string>
+
+    <string name="profile_title_nickname">Nickname</string>
+    <string name="profile_title_birthday">Birthday</string>
+    <string name="profile_title_gender">Gender</string>
+    <string name="profile_title_job">Occupation</string>
+    <string name="profile_title_residence">Region</string>
+    <string name="profile_title_hobby">Hobby</string>
+    <string name="profile_title_personality">Personality</string>
+    <string name="profile_title_about_me">Free word</string>
+
+    <!-- top -->
+    <string name="top_title">Training App</string>
+    <string name="top_sign_up">Sign up</string>
+    <string name="top_login">Login</string>
+
+    <!-- sign_up -->
+    <string name="sign_up_title">Sign up</string>
+    <string name="sign_up_user_name">User Name</string>
+    <string name="sign_up_email">Email</string>
+    <string name="sign_up_password">Password</string>
+    <string name="sign_up_done">Sign up</string>
+
+    <!-- main_tab -->
+    <string name="main_tab_item0">Feed</string>
+    <string name="main_tab_item1">Message</string>
+    <string name="main_tab_item2">My page</string>
+
+    <!-- login -->
+    <string name="login_title">Login</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_login">Login</string>
+    
+    <!-- my_page -->
+    <string name="my_page_edit_profile">Edit profile</string>
+    <string name="my_page_terms_service">Terms of service</string>
+    <string name="my_page_delete_account">Delete account</string>
+    <string name="my_page_delete_account_message">Delete account?</string>
+
+    <!-- edit_profile -->
+    <string name="edit_profile_title">Edit profile</string>
+
+    <!-- profile_display -->
+    <string name="profile_display_title">Profile display</string>
+    <string name="profile_display_send_message">Send a message</string>
+
+    <!-- talk_list -->
+    <string name="talk_list_delete">Delete</string>
+
+    <!--MediaDialog-->
+    <string-array name="media_select">
+        <item>@string/select_photo_library</item>
+        <item>@string/select_movie_library</item>
+        <item>@string/start_camera</item>
+    </string-array>
+
+    <string-array name="media_select_talk">
+        <item>@string/select_photo_library</item>
+        <item>@string/select_movie_library</item>
+        <item>@string/take_a_picture</item>
+        <item>@string/take_a_video</item>
+    </string-array>
+
+    <string-array name="media_selected_talk">
+        <item>@string/select_photo_library</item>
+        <item>@string/select_movie_library</item>
+        <item>@string/take_a_picture</item>
+        <item>@string/take_a_video</item>
+        <item>@string/to_reset</item>
+    </string-array>
+
+</resources>

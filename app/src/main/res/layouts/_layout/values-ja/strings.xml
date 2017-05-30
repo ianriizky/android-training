@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- common -->
+    <string name="app_name">AndroidLesson</string>
+    <string name="ok">OK</string>
+    <string name="cancel">キャンセル</string>
+    <string name="close">閉じる</string>
+    <string name="save">保存</string>
+    <string name="edit">編集</string>
+
+    <string name="start_camera">カメラを起動する</string>
+    <string name="select_photo_library">写真を選択する</string>
+    <string name="select_movie_library">動画を選択する</string>
+    <string name="take_a_picture">写真を撮る</string>
+    <string name="take_a_video">動画を撮る</string>
+    <string name="to_reset">リセットする</string>
+
+    <string name="profile_title_nickname">ニックネーム</string>
+    <string name="profile_title_birthday">生年月日</string>
+    <string name="profile_title_gender">性別</string>
+    <string name="profile_title_job">職業</string>
+    <string name="profile_title_residence">地域</string>
+    <string name="profile_title_hobby">趣味</string>
+    <string name="profile_title_personality">性格</string>
+    <string name="profile_title_about_me">フリーワード</string>
+
+    <!-- top -->
+    <string name="top_title">Training App</string>
+    <string name="top_sign_up">登録する</string>
+    <string name="top_login">ログイン</string>
+
+    <!-- sign_up -->
+    <string name="sign_up_title">登録</string>
+    <string name="sign_up_user_name">User Name</string>
+    <string name="sign_up_email">Email</string>
+    <string name="sign_up_password">Password</string>
+    <string name="sign_up_done">登録</string>
+
+    <!-- main_tab -->
+    <string name="main_tab_item0">feed</string>
+    <string name="main_tab_item1">message</string>
+    <string name="main_tab_item2">my page</string>
+
+    <!-- login -->
+    <string name="login_title">ログイン</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_login">ログイン</string>
+
+    <!-- my_page -->
+    <string name="my_page_edit_profile">edit profile</string>
+    <string name="my_page_terms_service">利用規約</string>
+    <string name="my_page_delete_account">アカウントの削除</string>
+    <string name="my_page_delete_account_message">アカウントを削除しますか？</string>
+
+    <!-- edit_profile -->
+    <string name="edit_profile_title">プロフィール編集</string>
+
+    <!-- profile_display -->
+    <string name="profile_display_title">プロフィール表示</string>
+    <string name="profile_display_send_message">メッセージを送る</string>
+
+    <!-- talk_list -->
+    <string name="talk_list_delete">削除する</string>
+
+    <!--MediaDialog-->
+    <string-array name="media_select">
+        <item>@string/select_photo_library</item>
+        <item>@string/select_movie_library</item>
+        <item>@string/start_camera</item>
+    </string-array>
+
+    <string-array name="media_select_talk">
+        <item>@string/select_photo_library</item>
+        <item>@string/select_movie_library</item>
+        <item>@string/take_a_picture</item>
+        <item>@string/take_a_video</item>
+    </string-array>
+
+    <string-array name="media_selected_talk">
+        <item>@string/select_photo_library</item>
+        <item>@string/select_movie_library</item>
+        <item>@string/take_a_picture</item>
+        <item>@string/take_a_video</item>
+        <item>@string/to_reset</item>
+    </string-array>
+
+</resources>
