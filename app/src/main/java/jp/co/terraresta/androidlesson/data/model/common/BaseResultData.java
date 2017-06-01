@@ -1,6 +1,7 @@
 package jp.co.terraresta.androidlesson.data.model.common;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by ooyama on 2017/05/26.
@@ -9,12 +10,13 @@ import com.google.gson.annotations.Expose;
 public class BaseResultData {
 
     @Expose
-    private int statusCode;
+    private int status;
+    @SerializedName("error")
     @Expose
     private ErrorData errorData;
 
-    public int getStatusCode() {
-        return statusCode;
+    public int getStatus() {
+        return status;
     }
 
     public ErrorData getErrorData() {
