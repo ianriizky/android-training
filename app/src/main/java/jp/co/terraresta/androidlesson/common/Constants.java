@@ -15,7 +15,7 @@ public class Constants {
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("[^a-zA-Z0-9._-]");
 
     // NOTE:通常はドメインを指定してください。
-    public static final String SERVER_DOMAIN = "52.193.52.243";
+    public static final String SERVER_DOMAIN = "terraresta.com";
 
     // APIコントローラ名称
     public static final String API_CTRL_NAME_SIGN_UP = "SignUpCtrl";
