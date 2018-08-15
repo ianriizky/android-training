@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin"
+    android:orientation="vertical"
     tools:context="jp.co.terraresta.androidlesson.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:textSize="@dimen/font_size_title"
+            android:textAlignment="center"
+            android:text="@string/top_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/title_bot"/>
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_signup"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/text_color_white"
+            android:scrollbarSize="@dimen/font_size_normal"
+            android:textAllCaps="false"
+            android:layout_marginBottom="@dimen/margin"
+            android:text="@string/sign_up_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:background="@color/colorAccent"
+            android:textColor="@color/text_color_white"
+            android:scrollbarSize="@dimen/font_size_normal"
+            android:textAllCaps="false"
+            android:text="@string/login_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
