@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"

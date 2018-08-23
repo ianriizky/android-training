@@ -26,11 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     fun autoDirectActivity() {
         pref = jp.co.terraresta.androidlesson.common.Preferences()
-        if(pref?.getToken(this)?.length == 0) {
-            var mainIntent = Intent(this,this::class.java)
-            startActivity(mainIntent)
-            finish()
-        } else {
+        if(pref?.getToken(this)?.length != 0) {
             var homeIntent = Intent(this, MainTabActivity::class.java)
             startActivity(homeIntent)
             finish()
