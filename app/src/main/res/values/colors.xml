@@ -6,4 +6,6 @@
 
     <color name="text_color_white">#fff</color>
     <color name="text_color_black">#000</color>
+    <color name="disabled_color">#cecece</color>
+    <color name="error_color">#ef3333</color>
 </resources>

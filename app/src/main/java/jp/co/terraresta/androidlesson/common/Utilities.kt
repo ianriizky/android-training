@@ -50,6 +50,11 @@ object Utilities {
         return !Constants.EMAIL_PATTERN.matcher(email).find()
     }
 
+    fun usernameCheck(username: String): Boolean {
+        return !Constants.USERNAME_PATTERN.matcher(username).find()
+    }
+
+
     /**
      * パスワードの正規表現チェック
      *

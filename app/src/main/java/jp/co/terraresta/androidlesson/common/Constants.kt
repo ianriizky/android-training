@@ -12,10 +12,12 @@ object Constants {
     val WEB_INFO_PAGE_TERMS_SERVICE = ""
 
     val EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9\\._\\-\\+]+@[a-zA-Z0-9_\\-]+\\.[a-zA-Z\\.]+[a-zA-Z]$")
-    val PASSWORD_PATTERN = Pattern.compile("[^a-zA-Z0-9._-]")
+    val PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9]{4,10}\$")
+    val PASSWORD_PATTERN_1 = Pattern.compile("[^a-zA-Z0-9._-]")
+    val USERNAME_PATTERN = Pattern.compile("^[a-zA-Z0-9]{1,20}$")
 
     // NOTE:通常はドメインを指定してください。
-    val SERVER_DOMAIN = "terraresta.com"
+    val SERVER_DOMAIN = "https://terraresta.com"
 
     // APIコントローラ名称
     val API_CTRL_NAME_SIGN_UP = "SignUpCtrl"
@@ -62,5 +64,10 @@ object Constants {
     val REQUEST_NAME_HOBBY = "hobby"
     val REQUEST_NAME_ABOUT_ME = "about_me"
 
+    //Error signup
+    val ERROR_INPUT_EMPTY = "This field required"
+    val ERROR_EMAIL_FORMAT = "Your email is incorrect"
+    val ERROR_USERNAME_FORMAT = "Username must not contain special character and maximum 20 character"
+    val ERROR_PASSWORD_FORMAT = "Password must not contain special character (4 - 10 character)"
 
 }
