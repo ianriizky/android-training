@@ -3,6 +3,7 @@ package jp.co.terraresta.androidlesson.view.activity.sign_up
 import android.content.Context
 import android.os.Bundle
 import android.preference.Preference
+import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
@@ -82,6 +83,7 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View, TextWatcher {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         setView()
+        actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     fun setView() {

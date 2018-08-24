@@ -20,8 +20,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.common.MainTabActivity" android:label="Home"></activity>
-       <activity  android:label="@string/sign_up_title" android:name=".view.activity.sign_up.SignUpActivity"></activity>
-        <activity android:name=".view.activity.login.LoginActivity"></activity>
+       <activity  android:label="@string/sign_up_title"
+           android:name=".view.activity.sign_up.SignUpActivity"
+           android:parentActivityName=".MainActivity"
+           ></activity>
+        <activity
+            android:parentActivityName=".MainActivity"
+            android:name=".view.activity.login.LoginActivity"></activity>
     </application>
 
 </manifest>
