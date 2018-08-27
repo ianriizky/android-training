@@ -22,6 +22,11 @@ open class Preferences {
         return PreferenceManager.getDefaultSharedPreferences(ctx)
     }
 
+    fun clearSharedPref(ctx: Context) {
+        var edt:SharedPreferences.Editor = getSharedPref(ctx).edit()
+        edt.clear()
+        edt.commit()
+    }
     fun setToken(ctx: Context, token: String) {
         var edt:SharedPreferences.Editor = getSharedPref(ctx).edit()
         edt.putString(Constants?.REQUEST_NAME_ACCESS_TOKEN, token)

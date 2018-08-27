@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.common.MainTabActivity" android:label="Home"></activity>
+        <activity
+            android:name=".view.activity.common.MainTabActivity"></activity>
        <activity  android:label="@string/sign_up_title"
            android:name=".view.activity.sign_up.SignUpActivity"
            android:parentActivityName=".MainActivity"
