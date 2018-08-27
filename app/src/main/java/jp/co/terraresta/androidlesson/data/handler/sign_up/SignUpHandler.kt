@@ -48,6 +48,11 @@ open class SignUpHandler: BaseHandler {
                     if(response != null) {
 //                        println("RESS: " +response.body().toString())
                         var ress: SignUpData = response.body()!!
+                        println("RESS UID: " +ress.userId)
+                        println("RESS TOKEN: " +ress.accessToken)
+                        println("RESS ERROR: " +ress.errorData?.errorMessage)
+                        println("RESS STAT: " +ress.status)
+
                         signUpPresenter?.getError(ress.errorData?.errorMessage.toString())
                         signUpPresenter?.setRessApi(ress.userId, ress.accessToken.toString())
 
