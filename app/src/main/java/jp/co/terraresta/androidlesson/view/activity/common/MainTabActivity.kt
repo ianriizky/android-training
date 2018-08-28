@@ -39,8 +39,8 @@ class MainTabActivity : AppCompatActivity(),  MainTabContract.View{
         tabs.setupWithViewPager(viewPager)
         var tabFragmentAdapter: MainTabFragmentAdapter = MainTabFragmentAdapter(supportFragmentManager)
 
-        tabFragmentAdapter.addFragment(TalkListFragment(), "Feed")
-        tabFragmentAdapter.addFragment(ProfileFeedFragment(), "Message")
+        tabFragmentAdapter.addFragment(ProfileFeedFragment(), "Feed")
+        tabFragmentAdapter.addFragment(TalkListFragment(), "Message")
         tabFragmentAdapter.addFragment(MyPageFragment(), "Mypage")
 
         viewPager?.adapter = tabFragmentAdapter

@@ -1,20 +1,13 @@
 package jp.co.terraresta.androidlesson.view.fragment.my_page
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.*
 import jp.co.terraresta.androidlesson.MainActivity
 
 import jp.co.terraresta.androidlesson.R
 import jp.co.terraresta.androidlesson.common.Preferences
-import jp.co.terraresta.androidlesson.presenter.common.MainTabContract
-import jp.co.terraresta.androidlesson.presenter.common.MainTabPresenter
-import jp.co.terraresta.androidlesson.view.activity.common.MainTabActivity
-import jp.co.terraresta.androidlesson.view.activity.talk.TalkActivity
 
 
 /**
@@ -53,8 +46,9 @@ class MyPageFragment :  Fragment(){
 
     fun logoutAction(){
         pref.clearSharedPref(this.context)
-        var newtintent: Intent = Intent(this.context, MainActivity::class.java)
-        this.context.startActivity(newtintent)
+        var logoutIntent: Intent = Intent(this.context, MainActivity::class.java)
+        logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK )
+        this.context.startActivity(logoutIntent)
     }
 
 
