@@ -9,6 +9,7 @@ import android.widget.EditText
 
 import jp.co.terraresta.androidlesson.R
 import jp.co.terraresta.androidlesson.common.Constants
+import jp.co.terraresta.androidlesson.common.Utilities
 import jp.co.terraresta.androidlesson.presenter.login.LoginContract
 import jp.co.terraresta.androidlesson.presenter.login.LoginPresenter
 import jp.co.terraresta.androidlesson.view.view_model.login.LoginViewModel
@@ -32,14 +33,20 @@ class LoginActivity : AppCompatActivity(), TextWatcher, LoginContract.View{
                 if(edt_login_email.text.toString().isEmpty()){
                     edt_login_email.setError(Constants.ERROR_INPUT_EMPTY)
                     emailValid= false
-                } else { emailValid = true }
+                }else if(Utilities.emailCheck(edt_login_email.text.toString())) {
+                    edt_login_email.setError(Constants.ERROR_EMAIL_FORMAT)
+                    emailValid= false
+                }else { emailValid = true }
             }
 
             edt_login_password.text.hashCode() -> {
                 if(edt_login_password.text.toString().isEmpty()){
                    edt_login_password.setError(Constants.ERROR_INPUT_EMPTY)
                     passwordValid = false
-                } else {passwordValid = true}
+                }else if(Utilities.passwordCheck(edt_login_password.text.toString())) {
+                    edt_login_password.setError(Constants.ERROR_PASSWORD_FORMAT)
+                    passwordValid = false
+                }else {passwordValid = true}
             }
         }
 
