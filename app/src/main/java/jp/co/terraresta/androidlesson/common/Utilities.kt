@@ -1,6 +1,10 @@
 package jp.co.terraresta.androidlesson.common
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import jp.co.terraresta.androidlesson.BuildConfig
+import jp.co.terraresta.androidlesson.view.activity.common.MainTabActivity
 
 /**
  * Created by ooyama on 2017/05/24.
@@ -64,4 +68,6 @@ object Utilities {
     fun passwordCheck(password: String): Boolean {
         return !Constants.PASSWORD_PATTERN.matcher(password).find()
     }
+
+
 }

@@ -24,7 +24,6 @@ open class BaseHandler {
                 .client(httpClient?.build())
                 .build()
 
-        println("HTTP CLIENT: " +httpClient)
         return retrofit
     }
 

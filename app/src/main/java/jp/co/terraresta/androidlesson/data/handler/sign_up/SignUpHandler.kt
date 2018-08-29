@@ -33,9 +33,6 @@ open class SignUpHandler: BaseHandler {
      return RestClient()?.create(SignUpContract.Services::class.java)
     }
 
-    fun getLoginService() {
-
-    }
 
     fun signUpAction() {
         try {

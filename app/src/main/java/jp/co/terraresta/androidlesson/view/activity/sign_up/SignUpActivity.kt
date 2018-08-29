@@ -31,7 +31,7 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View, TextWatcher {
         errorView?.setText(errorMassage)
     }
 
-    override fun afterTextChanged(p0: Editable?) {}
+    override fun afterTextChanged(p1: Editable?) {}
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
         when(p0?.hashCode()) {

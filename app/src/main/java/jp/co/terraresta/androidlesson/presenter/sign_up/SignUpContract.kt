@@ -1,8 +1,8 @@
 package jp.co.terraresta.androidlesson.presenter.sign_up
 
-import android.telecom.Call
 import android.view.View
 import jp.co.terraresta.androidlesson.data.model.sign_up.SignUpData
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
@@ -28,7 +28,7 @@ open interface SignUpContract {
                 @Path("controller") controller: String,
                 @Path("action") action:String,
                 @QueryMap params:MutableMap<String, String>
-        ): retrofit2.Call<SignUpData>
+        ): Call<SignUpData>
 
     }
 }

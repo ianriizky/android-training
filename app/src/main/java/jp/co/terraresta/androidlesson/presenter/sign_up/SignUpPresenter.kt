@@ -6,6 +6,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import jp.co.terraresta.androidlesson.MainActivity
 import jp.co.terraresta.androidlesson.common.Preferences
+import jp.co.terraresta.androidlesson.common.Utilities
 import jp.co.terraresta.androidlesson.data.handler.sign_up.SignUpHandler
 import jp.co.terraresta.androidlesson.view.activity.common.MainTabActivity
 import jp.co.terraresta.androidlesson.view.view_model.sign_up.SignUpViewModel.login_id
@@ -40,29 +41,19 @@ open class SignUpPresenter: SignUpContract.Presenter {
             signUpView?.showError("*" +err)
         } else {
             signUpView?.showError(" ")
-            signUpSuccess()
+            signUpPref = Preferences()
+            signUpPref?.navHome(signUpCtx!!)
         }
 
-    }
-
-    fun signUpSuccess() {
-        var homeIntent = Intent(signUpCtx, MainTabActivity::class.java)
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK )
-        signUpAct?.startActivity(homeIntent)
     }
 
 
     fun setRessApi(userid:Int, token:String) {
         signUpPref = Preferences()
         if(userid != 0 && token != "null") {
-            signUpPref?.setToken(signUpCtx!!, token)
+            signUpPref?.setIdentifier(signUpCtx!!, token, userid)
             println("GET TOKEN PREF: " +signUpPref?.getToken(signUpCtx!!))
         }
 
     }
-
-    fun getToken():String { return accessToken!!}
-
-
-
 }
