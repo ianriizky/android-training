@@ -1,6 +1,7 @@
 package jp.co.terraresta.androidlesson.presenter.my_page
 
 import android.graphics.Bitmap
+import android.net.Uri
 import io.reactivex.Observable
 import jp.co.terraresta.androidlesson.data.model.media.ImageUploadData
 import jp.co.terraresta.androidlesson.data.model.profile.ProfileDisplayData
@@ -16,8 +17,7 @@ interface MyPageContract {
     }
     interface Presenter {
         fun fetchUserData()
-        fun takePhoto(img: Bitmap)
-        fun openGallery(img: Bitmap)
+        fun uploadMedia(uri: Uri, source: Int)
         fun isSucessFetchUserData(ressData: ProfileDisplayData)
         fun updatePhotoProfile(data:ImageUploadData, action: String)
     }

@@ -8,6 +8,7 @@ import android.net.Uri
 import android.preference.EditTextPreference
 import android.provider.MediaStore
 import android.view.View
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_GALLERY_ACTIVITY
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_UPDATE_PP
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_DATA
 import jp.co.terraresta.androidlesson.common.Preferences
@@ -30,36 +31,44 @@ import java.io.File
  */
 
 class MediaUploadPresenter(ctx: Context, pref: Preferences):MediaUploadContract.Presenter {
-    override fun uploadImageProfile(img: Bitmap, presenter: MyPagePresenter) {
+    override fun uploadImageProfile(uri: Uri, presenter: MyPagePresenter, source: Int) {
         myPagePresenter = presenter
-        var tempUri: Uri = getImageUri( img)
-        var file: File = File(getRealPath(tempUri))
+        var file: File? = null
+        if (source == REQUEST_CODE_GALLERY_ACTIVITY) {
+            file = File(getRealPath(uri))
+            println("GALERY:  " +file)
+        } else {
+            var uriLength: Int= uri.toString().length
+            var finaluri: String = uri.toString().slice(5..uriLength-1)
+            file = File(finaluri)
+
+            println("CAMERA: " +file)
+        }
+//
+//        println("FILE URI: " +file)
         var reqFile: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
         var fileBody = MultipartBody.Part.createFormData(REQUEST_NAME_DATA, file.name, reqFile)
-
-        println("PATH: " +file)
 
         var location: String = "Profile"
         imageuploadHandler = ImageUploadHandler(mediaUploadPref.getToken(mediaUpCtx), location, fileBody, this)
         imageuploadHandler?.uploadImageAction()
     }
 
+
+
     override fun isUploadImageSuccess(data: ImageUploadData) {
-        if(data.status != 1) {
-            myPagePresenter?.myPageView?.showError(data.errorData?.errorMessage!!)
-        } else {
+        if(data.status == 1) {
            myPagePresenter?.updatePhotoProfile(data, "")
+        } else {
+            myPagePresenter?.myPageView?.showError(data.errorData?.errorMessage!!)
         }
     }
 
-    fun getImageUri( image: Bitmap): Uri{
-        var bytes: ByteArrayOutputStream = ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        var path: String = MediaStore.Images.Media.insertImage(mediaUpCtx.contentResolver, image, "Title", null)
-
-        return Uri.parse(path)
+    fun sliceUri(uri: Uri): String {
+        var finaluri: String = uri.toString()
+        finaluri.slice(0..4)
+        return finaluri
     }
-
     fun getRealPath(uri: Uri): String{
         var cursor: Cursor = mediaUpCtx.contentResolver.query(uri, null, null, null, null)
         cursor.moveToFirst()

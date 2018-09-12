@@ -29,7 +29,9 @@ import jp.co.terraresta.androidlesson.presenter.my_page.MyPagePresenter
 import android.R.attr.data
 import android.app.*
 import android.app.Activity.RESULT_OK
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Environment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.app.NotificationCompat.getExtras
@@ -41,6 +43,10 @@ import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_GALLERY_ACTI
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_UPDATE_PP
 import jp.co.terraresta.androidlesson.data.model.media.ImageUploadData
 import jp.co.terraresta.androidlesson.view.activity.profile.ProfileEditActivity
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -98,6 +104,8 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
     var displayEmail: TextView? = null
     var displayPass: TextView? = null
     var termsWebView: WebView? = null
+    var file: File? =null
+    var fileUri: Uri? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -180,8 +188,14 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
         startActivityForResult(intent, REQUEST_CODE_GALLERY_ACTIVITY)
     }
 
+
     fun takePhoto() {
         var intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        file = File(activity.externalCacheDir,
+                System.currentTimeMillis().toString() + ".jpg")
+        fileUri = Uri.fromFile(file)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
+
         startActivityForResult(intent, REQUEST_CODE_CAMERA_ACTIVITY)
     }
 
@@ -189,12 +203,9 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
         if(resultCode == RESULT_OK){
             loader()
            if(requestCode == REQUEST_CODE_CAMERA_ACTIVITY){
-               var photo: Bitmap = data?.extras?.get("data") as Bitmap
-               myPagePresenter?.takePhoto(photo)
+                myPagePresenter?.uploadMedia(fileUri!!, REQUEST_CODE_CAMERA_ACTIVITY)
            } else if(requestCode == REQUEST_CODE_GALLERY_ACTIVITY) {
-               var uri: Uri = data!!.data
-                var photoGallery: Bitmap = MediaStore.Images.Media.getBitmap(this.context.contentResolver, uri)
-               myPagePresenter?.openGallery(photoGallery)
+                myPagePresenter?.uploadMedia(data!!.data, REQUEST_CODE_GALLERY_ACTIVITY)
            }
         } else {
             return

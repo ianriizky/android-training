@@ -1,6 +1,7 @@
 package jp.co.terraresta.androidlesson.presenter.media
 
 import android.graphics.Bitmap
+import android.net.Uri
 import io.reactivex.Observable
 import jp.co.terraresta.androidlesson.data.model.media.ImageUploadData
 import jp.co.terraresta.androidlesson.data.model.media.VideoUploadData
@@ -18,7 +19,7 @@ interface MediaUploadContract {
     }
 
     interface  Presenter {
-        fun uploadImageProfile(img: Bitmap, presenter: MyPagePresenter)
+        fun uploadImageProfile(uri: Uri, presenter: MyPagePresenter, source: Int)
         fun isUploadImageSuccess(data: ImageUploadData)
     }
 

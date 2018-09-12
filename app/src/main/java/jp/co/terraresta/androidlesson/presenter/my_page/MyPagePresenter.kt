@@ -22,24 +22,22 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 class MyPagePresenter(ctx: Context, view: MyPageContract.View): MyPageContract.Presenter{
+    override fun uploadMedia(uri: Uri, source: Int) {
+        mediaUpPresenter =  MediaUploadPresenter(myPageContext!!, myPagePreferences)
+        mediaUpPresenter?.uploadImageProfile(uri, this, source)
+    }
+
+
     override fun updatePhotoProfile(data: ImageUploadData, action: String) {
         if(action == "delete_pp") {
             profileDisplayData?.imageId = data.imageId
             profileEditPresenter = ProfileEditPresenter(myPageContext!!, myPagePreferences)
             profileEditPresenter?.editProfilePhotoProfile(this, profileDisplayData!!)
         } else {
+
             fetchUserData()
         }
-    }
 
-    override fun openGallery(img: Bitmap) {
-        mediaUpPresenter = MediaUploadPresenter(myPageContext!!, myPagePreferences)
-        mediaUpPresenter?.uploadImageProfile(img, this)
-    }
-
-    override fun takePhoto(img: Bitmap) {
-      mediaUpPresenter =  MediaUploadPresenter(myPageContext!!, myPagePreferences)
-        mediaUpPresenter?.uploadImageProfile(img, this)
     }
 
     override fun isSucessFetchUserData(ressData: ProfileDisplayData) {
