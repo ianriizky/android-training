@@ -22,6 +22,7 @@ open class LoginHandler: BaseHandler {
     constructor(email: String, pass:String, presenter: LoginPresenter) {
         loginParams?.put("login_id", email)
         loginParams?.put("password", pass)
+        loginParams?.put("language", "en")
         loginPresenter = presenter
     }
 

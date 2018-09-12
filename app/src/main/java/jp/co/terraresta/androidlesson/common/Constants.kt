@@ -9,7 +9,7 @@ import java.util.regex.Pattern
 object Constants {
 
     // TODO:利用規約ページを追記。
-    val WEB_INFO_PAGE_TERMS_SERVICE = ""
+    val WEB_INFO_PAGE_TERMS_SERVICE = "https://s3-ap-northeast-1.amazonaws.com/app-lesson-media/tos.html"
 
     val EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9\\._\\-\\+]+@[a-zA-Z0-9_\\-]+\\.[a-zA-Z\\.]+[a-zA-Z]$")
     val PASSWORD_PATTERN = Pattern.compile("^[a-zA-Z0-9]{4,10}\$")
@@ -49,6 +49,7 @@ object Constants {
     val REQUEST_NAME_ACCESS_TOKEN = "access_token"
     val REQUEST_NAME_LAST_LOGIN_TIME = "last_login_time"
     val REQUEST_NAME_USER_ID = "user_id"
+    val REQUEST_NAME_LOCATION = "location"
     val REQUEST_NAME_LAST_UPDATE_TIME = "last_update_time"
     val REQUEST_NAME_TO_USER_ID = "to_user_id"
     val REQUEST_NAME_BORDER_MESSAGE_ID = "border_message_id"
@@ -61,8 +62,16 @@ object Constants {
     val REQUEST_NAME_RESIDENCE = "residence"
     val REQUEST_NAME_JOB = "job"
     val REQUEST_NAME_PERSONALITY = "personality"
+    val REQUEST_NAME_GENDER = "gender"
     val REQUEST_NAME_HOBBY = "hobby"
     val REQUEST_NAME_ABOUT_ME = "about_me"
+
+    // common
+    val REQUEST_CODE_CAMERA_ACTIVITY = 1034
+    val REQUEST_CODE_GALLERY_ACTIVITY = 1035
+    val REQUEST_CODE_DELETE_PP = "delete_photo_profile"
+    val REQUEST_CODE_UPDATE_PP = "update_photo_profile"
+    val PACKAGE_NAME = "jp.co.terraresta.androidlesson.common"
 
     //Error signup
     val ERROR_INPUT_EMPTY = "This field required"

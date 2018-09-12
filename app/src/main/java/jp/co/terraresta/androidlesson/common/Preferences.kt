@@ -1,12 +1,15 @@
 package jp.co.terraresta.androidlesson.common
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Fragment
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import jp.co.terraresta.androidlesson.MainActivity
+import jp.co.terraresta.androidlesson.R
 import jp.co.terraresta.androidlesson.presenter.sign_up.SignUpPresenter
 import jp.co.terraresta.androidlesson.view.activity.common.MainTabActivity
 
@@ -56,5 +59,4 @@ open class Preferences {
         rootintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK )
         ctx.startActivity(rootintent)
     }
-
 }

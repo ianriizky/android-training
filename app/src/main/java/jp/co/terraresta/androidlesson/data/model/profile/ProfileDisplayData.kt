@@ -15,7 +15,7 @@ class ProfileDisplayData : BaseResultData() {
     @Expose
     val nickname: String? = null
     @Expose
-    val imageId: Int = 0
+    var imageId: Int = 0
     @Expose
     val imageSize: String? = null
     @Expose
@@ -31,7 +31,7 @@ class ProfileDisplayData : BaseResultData() {
     @Expose
     val personality: Int = 0
     @Expose
-    val hobby: Int = 0
+    val hobby: String? = null
     @Expose
     val aboutMe: String? = null
     @Expose

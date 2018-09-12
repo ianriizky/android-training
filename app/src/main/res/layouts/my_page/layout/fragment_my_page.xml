@@ -1,10 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
-        android:text="Fragment my page"
+    <ScrollView
+        android:scrollbars="vertical"
+        android:scrollIndicators="right"
+        android:scrollbarStyle="insideOverlay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Profile  -->
+            <LinearLayout
+                android:padding="@dimen/margin"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/img_wrap"
+                    android:layout_marginBottom="@dimen/margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_photo_profile"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        />
+                    <RelativeLayout
+                        android:id="@+id/rl_photo_profile_clickable"
+                        android:clickable="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/photo_profile_ripple_style"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"></RelativeLayout>
+                </RelativeLayout>
+                <Button
+                    android:id="@+id/btn_edit_profile"
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="normal"
+                    android:textColor="@color/text_color_white"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/font_size_normal"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/margin"
+                    android:background="@drawable/button_primary_ripple"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:text="@string/edit_profile_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Email -->
+            <LinearLayout
+                android:background="@android:color/white"
+                android:layout_marginTop="@dimen/margin"
+                android:orientation="vertical" android:showDividers="end" android:divider="@drawable/textview_divider"
+                android:paddingLeft="@dimen/padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding_item"
+                    android:paddingBottom="@dimen/padding_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/font_size_normal"
+                        android:textColor="@color/text_color_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <!-- Password -->
+            <LinearLayout
+                android:background="@android:color/white"
+                android:paddingLeft="@dimen/padding"
+                android:layout_marginBottom="@dimen/margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding_item"
+                    android:paddingBottom="@dimen/padding_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_password"
+                        android:inputType="textPassword"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/font_size_normal"
+                        android:textColor="@color/text_color_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Terms of Services -->
+            <LinearLayout
+                android:id="@+id/ll_terms"
+                android:clickable="true"
+                android:background="@drawable/default_ripple"
+                android:orientation="vertical" android:showDividers="end" android:divider="@drawable/textview_divider"
+                android:paddingLeft="@dimen/padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding_item"
+                    android:paddingBottom="@dimen/padding_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="@dimen/font_size_normal"
+                        android:textColor="@color/text_color_black"
+                        android:text="@string/my_page_terms_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Delete account -->
+            <LinearLayout
+                android:id="@+id/ll_delete_account"
+                android:clickable="true"
+                android:background="@drawable/default_ripple"
+                android:paddingLeft="@dimen/padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:paddingRight="@dimen/padding"
+                    android:paddingTop="@dimen/padding_item"
+                    android:paddingBottom="@dimen/padding_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="@dimen/font_size_normal"
+                        android:textColor="@color/error_color"
+                        android:text="@string/my_page_delete_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/sheet_photo_profile"
+        android:layout_width="match_parent"
+        android:clipToPadding="true"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="0dp"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:padding="@dimen/padding"
+                android:text="@string/select_media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/sheet_select_photo"
+                android:clickable="true"
+                android:background="@drawable/default_ripple"
+                android:layout_width="match_parent"
+                android:padding="@dimen/margin"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp">
+
+                    <ImageView
+                        android:paddingRight="@dimen/padding"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_folder_black_24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="@dimen/font_size_normal"
+                        android:textColor="@color/text_color_black"
+                        android:text="@string/select_photo_library"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/sheet_take_photo"
+                android:clickable="true"
+                android:background="@drawable/default_ripple"
+                android:layout_width="match_parent"
+                android:padding="@dimen/margin"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp">
+
+                    <ImageView
+                        android:paddingRight="@dimen/padding"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_camera_alt_black_24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="@dimen/font_size_normal"
+                        android:textColor="@color/text_color_black"
+                        android:text="@string/take_a_picture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sheet_delete_photo"
+                android:clickable="true"
+                android:background="@drawable/default_ripple"
+                android:layout_width="match_parent"
+                android:padding="@dimen/margin"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp">
+
+                    <ImageView
+                        android:paddingRight="@dimen/padding"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_clear_black_24dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_weight="1"
+                        android:textSize="@dimen/font_size_normal"
+                        android:textColor="@color/error_color"
+                        android:text="@string/talk_list_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

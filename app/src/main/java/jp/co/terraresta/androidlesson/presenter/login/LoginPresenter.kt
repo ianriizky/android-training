@@ -17,7 +17,7 @@ import jp.co.terraresta.androidlesson.view.view_model.login.LoginViewModel.passw
 class LoginPresenter(view: LoginContract.View, ctx: Context): LoginContract.Presenter{
     override fun isLoginSuccess(response: LoginData) {
        if(response?.errorData?.errorMessage != null){
-            loginView.showError(response?.errorData?.errorMessage)
+            loginView.showError(response?.errorData?.errorMessage!!)
        } else {
            loginView.showError(" ")
            loginPref  = Preferences()
