@@ -17,7 +17,8 @@ interface MyPageContract {
     }
     interface Presenter {
         fun fetchUserData()
-        fun uploadMedia(uri: Uri, source: Int)
+        fun takePhoto(uri: Uri?)
+        fun openGallery(uri: Uri?)
         fun isSucessFetchUserData(ressData: ProfileDisplayData)
         fun updatePhotoProfile(data:ImageUploadData, action: String)
     }

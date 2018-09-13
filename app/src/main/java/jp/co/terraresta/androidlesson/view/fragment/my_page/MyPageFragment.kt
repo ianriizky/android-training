@@ -3,53 +3,39 @@ package jp.co.terraresta.androidlesson.view.fragment.my_page
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v4.app.Fragment
 import android.view.*
 import android.webkit.WebView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
 import de.hdodenhof.circleimageview.CircleImageView
-import jp.co.terraresta.androidlesson.MainActivity
 
 import jp.co.terraresta.androidlesson.R
 import jp.co.terraresta.androidlesson.WebViewActivity
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_CAMERA_ACTIVITY
-import jp.co.terraresta.androidlesson.common.Constants.WEB_INFO_PAGE_TERMS_SERVICE
 import jp.co.terraresta.androidlesson.common.Preferences
 import jp.co.terraresta.androidlesson.data.model.profile.ProfileDisplayData
 import jp.co.terraresta.androidlesson.presenter.account.DeleteAccountContract
 import jp.co.terraresta.androidlesson.presenter.account.DeleteAccountPresenter
 import jp.co.terraresta.androidlesson.presenter.my_page.MyPageContract
 import jp.co.terraresta.androidlesson.presenter.my_page.MyPagePresenter
-import android.R.attr.data
 import android.app.*
 import android.app.Activity.RESULT_OK
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import android.support.v4.app.ActivityCompat
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.support.v4.app.NotificationCompat.getExtras
-import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
-import android.widget.Button
+import android.widget.*
 import com.squareup.picasso.Picasso
-import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_DELETE_PP
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_GALLERY_ACTIVITY
-import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_UPDATE_PP
 import jp.co.terraresta.androidlesson.data.model.media.ImageUploadData
 import jp.co.terraresta.androidlesson.view.activity.profile.ProfileEditActivity
 import java.io.File
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.jar.Manifest
 
 
 /**
@@ -107,8 +93,9 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
     var displayEmail: TextView? = null
     var displayPass: TextView? = null
     var termsWebView: WebView? = null
-    var file: File? =null
-    var fileUri: Uri? = null
+
+    var photoFile: File? = null
+    var photoUri: Uri? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
@@ -184,6 +171,7 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
 
     }
 
+
     /*
      * RESULT REQEST PERMISSION
       */
@@ -210,29 +198,55 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
         }
     }
 
-    private fun openGallery(){
+    fun openGallery(){
         var intent: Intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, REQUEST_CODE_GALLERY_ACTIVITY)
     }
 
-    private fun takePhoto() {
-        var intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        file = File(activity.externalCacheDir, System.currentTimeMillis().toString() + ".jpg")
-        fileUri = Uri.fromFile(file)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
+    private fun createImageFile(): String {
+        val timeStamp:String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName :String= "JPEG_" + timeStamp + ".jpg"
 
-        startActivityForResult(intent, REQUEST_CODE_CAMERA_ACTIVITY)
+        return imageFileName
+    }
+
+    fun getPhotoFileUri(): File {
+        // Create an image file name
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName = "JPEG_" + timeStamp + "_"
+        val storageDir = this.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(
+                imageFileName, /* prefix */
+                ".jpg", /* suffix */
+                storageDir      /* directory */
+        )
+
+        // Save a file: path for use with ACTION_VIEW intents
+        // Return the file target for the photo based on filename
+        return image
+    }
+
+    fun takePhoto() {
+        var intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        photoFile = getPhotoFileUri()
+        if(photoFile != null) {
+            var fileprovider: Uri = FileProvider.getUriForFile(this.activity, "jp.co.terraresta.androidlesson.fileprovider", photoFile)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileprovider)
+            startActivityForResult(intent, REQUEST_CODE_CAMERA_ACTIVITY)
+        }
     }
 
     /*
      * UTILITY REQUEST PERMISSION (CAMERA, GALLERY)
       */
-    private  fun requestPermission(codePerimission: Int) {
+    fun requestPermission(codePerimission: Int) {
         when(codePerimission){
             REQUEST_CODE_CAMERA_ACTIVITY -> {
                if(ActivityCompat.checkSelfPermission(this.context, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
                    requestPermissions(arrayOf(android.Manifest.permission.CAMERA), REQUEST_CODE_CAMERA_ACTIVITY)
                    return
+               } else {
+                   takePhoto()
                }
             }
 
@@ -240,6 +254,8 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
                if(ActivityCompat.checkSelfPermission(this.context, android.Manifest.permission.READ_EXTERNAL_STORAGE ) != PackageManager.PERMISSION_GRANTED){
                    requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_GALLERY_ACTIVITY)
                    return
+               } else {
+                   openGallery()
                }
             }
         }
@@ -251,11 +267,17 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(resultCode == RESULT_OK){
             loader()
-           if(requestCode == REQUEST_CODE_CAMERA_ACTIVITY){
-                myPagePresenter?.uploadMedia(fileUri!!, REQUEST_CODE_CAMERA_ACTIVITY)
-           } else if(requestCode == REQUEST_CODE_GALLERY_ACTIVITY) {
-                myPagePresenter?.uploadMedia(data!!.data, REQUEST_CODE_GALLERY_ACTIVITY)
-           }
+            if(requestCode == REQUEST_CODE_CAMERA_ACTIVITY){
+                var uri: Uri = Uri.parse(photoFile?.absolutePath!!)
+                myPagePresenter?.takePhoto(uri)
+            } else if(requestCode == REQUEST_CODE_GALLERY_ACTIVITY) {
+                var uri: Uri = data?.data!!
+                myPagePresenter?.openGallery(uri)
+            }
+//            if(data != null) {
+//            } else {
+//               Toast.makeText(this.context, "Please try again", Toast.LENGTH_LONG).show()
+//            }
         } else {
             return
         }

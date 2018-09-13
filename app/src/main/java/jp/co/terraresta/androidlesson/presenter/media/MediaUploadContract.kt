@@ -19,7 +19,8 @@ interface MediaUploadContract {
     }
 
     interface  Presenter {
-        fun uploadImageProfile(uri: Uri, presenter: MyPagePresenter, source: Int)
+        fun openGale(uri: Uri, presenter: MyPagePresenter)
+        fun takePhoto(uri: Uri, presenter: MyPagePresenter)
         fun isUploadImageSuccess(data: ImageUploadData)
     }
 

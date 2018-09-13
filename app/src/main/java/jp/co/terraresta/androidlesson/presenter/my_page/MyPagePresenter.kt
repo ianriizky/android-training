@@ -22,9 +22,16 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 class MyPagePresenter(ctx: Context, view: MyPageContract.View): MyPageContract.Presenter{
-    override fun uploadMedia(uri: Uri, source: Int) {
-        mediaUpPresenter =  MediaUploadPresenter(myPageContext!!, myPagePreferences)
-        mediaUpPresenter?.uploadImageProfile(uri, this, source)
+    override fun takePhoto(uri: Uri?) {
+        println("take photo: " +uri)
+        mediaUpPresenter = MediaUploadPresenter(myPageContext!!, myPagePreferences)
+        mediaUpPresenter?.takePhoto(uri!!, this)
+    }
+
+
+    override fun openGallery(uri: Uri?) {
+        mediaUpPresenter = MediaUploadPresenter(myPageContext!!, myPagePreferences)
+        mediaUpPresenter?.openGale(uri!!, this)
     }
 
 

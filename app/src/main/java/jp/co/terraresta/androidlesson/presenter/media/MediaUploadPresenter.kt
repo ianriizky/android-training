@@ -25,34 +25,52 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
+import android.provider.MediaStore.Images
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_CAMERA_ACTIVITY
+
 
 /**
  * Created by ooyama on 2017/05/29.
  */
 
 class MediaUploadPresenter(ctx: Context, pref: Preferences):MediaUploadContract.Presenter {
-    override fun uploadImageProfile(uri: Uri, presenter: MyPagePresenter, source: Int) {
+    override fun takePhoto(uri:Uri, presenter: MyPagePresenter) {
         myPagePresenter = presenter
-        var file: File? = null
-        if (source == REQUEST_CODE_GALLERY_ACTIVITY) {
-            file = File(getRealPath(uri))
-            println("GALERY:  " +file)
-        } else {
-            var uriLength: Int= uri.toString().length
-            var finaluri: String = uri.toString().slice(5..uriLength-1)
-            file = File(finaluri)
+        var file: File = File(uri.toString())
+        uploadMedia(file)
+    }
 
-            println("CAMERA: " +file)
-        }
-//
-//        println("FILE URI: " +file)
+    override fun openGale(uri: Uri, presenter: MyPagePresenter) {
+        myPagePresenter = presenter
+        var file: File = File(getRealPath(uri))
+        uploadMedia(file)
+    }
+
+    fun uploadMedia(file: File){
         var reqFile: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-        var fileBody = MultipartBody.Part.createFormData(REQUEST_NAME_DATA, file.name, reqFile)
-
+        var fileBody = MultipartBody.Part.createFormData(REQUEST_NAME_DATA, file?.name, reqFile)
         var location: String = "Profile"
         imageuploadHandler = ImageUploadHandler(mediaUploadPref.getToken(mediaUpCtx), location, fileBody, this)
         imageuploadHandler?.uploadImageAction()
+
     }
+
+//override fun uploadImageProfile(uri: Uri, presenter: MyPagePresenter, source: Int) {
+//        myPagePresenter = presenter
+//        var file: File? = null
+//        if (source == REQUEST_CODE_GALLERY_ACTIVITY) {
+//            file = File(getRealPath(uri))
+//            println("GALERY:  " +file)
+//        } else {
+////            var uriLength: Int= uri.toString().length
+////            var finaluri: String = uri.toString().slice(5..uriLength-1)
+//            file = File(uri.toString())
+//
+//            println("CAMERA: " +file)
+//        }
+////
+////        println("FILE URI: " +file)
+//    }
 
 
 
@@ -64,11 +82,13 @@ class MediaUploadPresenter(ctx: Context, pref: Preferences):MediaUploadContract.
         }
     }
 
-    fun sliceUri(uri: Uri): String {
-        var finaluri: String = uri.toString()
-        finaluri.slice(0..4)
-        return finaluri
+    fun getImageUri(inContext: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String? = Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
     }
+
     fun getRealPath(uri: Uri): String{
         var cursor: Cursor = mediaUpCtx.contentResolver.query(uri, null, null, null, null)
         cursor.moveToFirst()

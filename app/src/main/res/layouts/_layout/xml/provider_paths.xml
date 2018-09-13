@@ -2,5 +2,5 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <external-path
         name="external_files"
-        path="Android/data/android-lesson/files/Pictures"></external-path>
+        path="Android/data/jp.co.terraresta.androidlesson/files/Pictures"></external-path>
 </paths>
