@@ -32,9 +32,11 @@ import android.app.Activity.RESULT_OK
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v4.app.NotificationCompat.getExtras
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.widget.Button
 import com.squareup.picasso.Picasso
@@ -47,6 +49,7 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.jar.Manifest
 
 
 /**
@@ -138,7 +141,6 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
     }
 
 
-
     fun photoprofileInit(){
        photoProfileSheet = myPageView?.findViewById(R.id.sheet_photo_profile) as View
         photoProfileAct = myPageView?.findViewById(R.id.rl_photo_profile_clickable) as RelativeLayout
@@ -147,7 +149,6 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
         sheetTakePic = myPageView?.findViewById(R.id.sheet_take_photo) as LinearLayout
         sheetDelPic = myPageView?.findViewById(R.id.sheet_delete_photo) as LinearLayout
 
-        //default photo profile
 
         // open up bottom sheet
         photoProfileAct?.setOnClickListener {
@@ -160,13 +161,13 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
 
         // take photo profile from camera
         sheetTakePic?.setOnClickListener {
-            takePhoto()
+            requestPermission(REQUEST_CODE_CAMERA_ACTIVITY)
             photoProfileSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
         // take photo from gallery
         sheetGalery?.setOnClickListener {
-            openGallery()
+            requestPermission(REQUEST_CODE_GALLERY_ACTIVITY)
             photoProfileSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
@@ -183,22 +184,70 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
 
     }
 
-    fun openGallery(){
+    /*
+     * RESULT REQEST PERMISSION
+      */
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when(requestCode){
+            REQUEST_CODE_CAMERA_ACTIVITY -> {
+                if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    takePhoto()
+                } else {
+                    return
+                }
+                return
+            }
+
+            REQUEST_CODE_GALLERY_ACTIVITY -> {
+                if(grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                   openGallery()
+                } else {
+                   return
+                }
+            }
+        }
+    }
+
+    private fun openGallery(){
         var intent: Intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(intent, REQUEST_CODE_GALLERY_ACTIVITY)
     }
 
-
-    fun takePhoto() {
+    private fun takePhoto() {
         var intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        file = File(activity.externalCacheDir,
-                System.currentTimeMillis().toString() + ".jpg")
+        file = File(activity.externalCacheDir, System.currentTimeMillis().toString() + ".jpg")
         fileUri = Uri.fromFile(file)
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
 
         startActivityForResult(intent, REQUEST_CODE_CAMERA_ACTIVITY)
     }
 
+    /*
+     * UTILITY REQUEST PERMISSION (CAMERA, GALLERY)
+      */
+    private  fun requestPermission(codePerimission: Int) {
+        when(codePerimission){
+            REQUEST_CODE_CAMERA_ACTIVITY -> {
+               if(ActivityCompat.checkSelfPermission(this.context, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                   requestPermissions(arrayOf(android.Manifest.permission.CAMERA), REQUEST_CODE_CAMERA_ACTIVITY)
+                   return
+               }
+            }
+
+            REQUEST_CODE_GALLERY_ACTIVITY -> {
+               if(ActivityCompat.checkSelfPermission(this.context, android.Manifest.permission.READ_EXTERNAL_STORAGE ) != PackageManager.PERMISSION_GRANTED){
+                   requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_GALLERY_ACTIVITY)
+                   return
+               }
+            }
+        }
+    }
+
+    /*
+    * ACTIVITY INTENT RESULT (CAMERA. GALLERY INTENT)
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(resultCode == RESULT_OK){
             loader()
@@ -214,8 +263,9 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
     }
 
 
-
-
+    /*
+     * LOADER
+      */
     fun loader() {
         loading = ProgressDialog(this.context)
         loading?.setMessage("Please Wait...")
@@ -223,6 +273,9 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
         loading?.show()
     }
 
+    /*
+     * ALERT ERROR
+      */
     fun alertError(message: String) {
         var alertError = AlertDialog.Builder(this.context).create()
         alertError?.setMessage(message)
@@ -232,11 +285,13 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
         alertError.show()
     }
 
+    /*
+    * DIALOG ALERT
+     */
     fun dialogMessageDel() {
         var dialogInterface: DialogInterface.OnClickListener = DialogInterface.OnClickListener { dialogInterface, i ->
             when(i){
                 DialogInterface.BUTTON_POSITIVE -> {
-//
             delAccountPresenter = DeleteAccountPresenter(this.context, this)
             delAccountPresenter?.deleteAccount()
                 }
@@ -278,10 +333,6 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
         pref.clearSharedPref(this.context)
         pref.navRoot(this.context)
     }
-
-
-
-
 }
 
 
