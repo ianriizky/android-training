@@ -13,13 +13,15 @@ import rx.Observer
 
 interface ProfileEditContract {
     interface  View {
-
+        fun setResponse(data: BaseResultData)
+        fun showError(msg: String)
     }
 
     interface  Presenter {
-        fun isSuccessEditProfile(data: BaseResultData)
+        fun isSuccessEditProfile(data: BaseResultData, action: String)
         fun editProfile()
         fun editProfilePhotoProfile(presenter: MyPagePresenter, data: ProfileDisplayData)
+        fun editProfile(view: ProfileEditContract.View, data:ProfileDisplayData)
     }
 
     interface  Services {
@@ -29,7 +31,7 @@ interface ProfileEditContract {
                 @Path("controller") controller: String,
                 @Path("action") action: String,
                 @Query("access_token") token: String,
-                @Field("image_id") imageid: Int
+                @FieldMap  params: MutableMap<String, Any>
        ):Observable<BaseResultData>
 
     }

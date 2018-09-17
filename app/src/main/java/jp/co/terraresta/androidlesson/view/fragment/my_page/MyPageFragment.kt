@@ -2,7 +2,6 @@ package jp.co.terraresta.androidlesson.view.fragment.my_page
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.design.widget.BottomSheetBehavior
@@ -23,7 +22,6 @@ import jp.co.terraresta.androidlesson.presenter.my_page.MyPagePresenter
 import android.app.*
 import android.app.Activity.RESULT_OK
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import android.support.v4.app.ActivityCompat
@@ -31,6 +29,8 @@ import android.support.v4.content.FileProvider
 import android.widget.*
 import com.squareup.picasso.Picasso
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_GALLERY_ACTIVITY
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_PROFILE_EDIT
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_KEY_PROFILE_DATA
 import jp.co.terraresta.androidlesson.data.model.media.ImageUploadData
 import jp.co.terraresta.androidlesson.view.activity.profile.ProfileEditActivity
 import java.io.File
@@ -119,9 +119,12 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
             var webview: Intent = Intent(this.context, WebViewActivity::class.java)
             this.context.startActivity(webview)
         }
+
+        // EDIT PROFILE BUTTON
         editProfile?.setOnClickListener {
             var intent: Intent = Intent(this.context, ProfileEditActivity::class.java)
-            startActivity(intent)
+            intent.putExtra(REQUEST_KEY_PROFILE_DATA, profileDisplayData)
+            startActivityForResult(intent, REQUEST_CODE_PROFILE_EDIT)
         }
         photoprofileInit()
 
@@ -203,13 +206,6 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
         startActivityForResult(intent, REQUEST_CODE_GALLERY_ACTIVITY)
     }
 
-    private fun createImageFile(): String {
-        val timeStamp:String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName :String= "JPEG_" + timeStamp + ".jpg"
-
-        return imageFileName
-    }
-
     fun getPhotoFileUri(): File {
         // Create an image file name
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
@@ -273,6 +269,9 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
             } else if(requestCode == REQUEST_CODE_GALLERY_ACTIVITY) {
                 var uri: Uri = data?.data!!
                 myPagePresenter?.openGallery(uri)
+            } else if(requestCode == REQUEST_CODE_PROFILE_EDIT){
+               profileDisplayData  = data?.extras?.get(REQUEST_KEY_PROFILE_DATA) as ProfileDisplayData
+                loading?.dismiss()
             }
 //            if(data != null) {
 //            } else {
@@ -336,7 +335,7 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
     * LOGOUT MENU
      */
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.logout, menu)
+        inflater?.inflate(R.menu.mypage_logout, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

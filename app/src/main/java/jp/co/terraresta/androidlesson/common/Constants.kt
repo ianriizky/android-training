@@ -69,10 +69,13 @@ object Constants {
     // common
     val REQUEST_CODE_CAMERA_ACTIVITY = 1034
     val REQUEST_CODE_GALLERY_ACTIVITY = 1035
+    val REQUEST_CODE_PROFILE_EDIT = 1002
     val REQUEST_CODE_WRITE_STORAGE = 1036
     val REQUEST_CODE_DELETE_PP = "delete_photo_profile"
-    val REQUEST_CODE_UPDATE_PP = "update_photo_profile"
-    val PACKAGE_NAME = "jp.co.terraresta.androidlesson.common"
+
+
+    //key
+    val REQUEST_KEY_PROFILE_DATA = "profile_data"
 
     //Error signup
     val ERROR_INPUT_EMPTY = "This field required"

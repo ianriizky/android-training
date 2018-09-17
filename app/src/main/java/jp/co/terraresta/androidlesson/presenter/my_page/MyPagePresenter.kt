@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
-import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_DELETE_PP
 import jp.co.terraresta.androidlesson.common.Preferences
 import jp.co.terraresta.androidlesson.data.handler.my_page.MyPageHandler
 import jp.co.terraresta.androidlesson.data.model.media.ImageUploadData

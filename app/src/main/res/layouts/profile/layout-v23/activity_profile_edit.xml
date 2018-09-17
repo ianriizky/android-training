@@ -260,7 +260,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <EditText
-                    android:scrollHorizontally="true"
+                    android:scrollIndicators="left"
+                    android:scrollbarStyle="insideOverlay"
                     android:scrollbars="vertical"
                     android:id="@+id/aboutme"
                     android:lines="5"

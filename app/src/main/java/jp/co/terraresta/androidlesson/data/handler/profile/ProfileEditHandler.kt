@@ -6,13 +6,16 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import jp.co.terraresta.androidlesson.common.Constants.API_ACTION_NAME_PROFILE_EDIT
 import jp.co.terraresta.androidlesson.common.Constants.API_CTRL_NAME_PROFILE
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_ABOUT_ME
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_ACCESS_TOKEN
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_BIRTHDAY
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_DATA
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_GENDER
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_HOBBY
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_IMAGE_ID
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_JOB
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_NICKNAME
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_PERSONALITY
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_RESIDENCE
 import jp.co.terraresta.androidlesson.data.handler.common.BaseHandler
 import jp.co.terraresta.androidlesson.data.model.common.BaseResultData
@@ -31,19 +34,21 @@ class ProfileEditHandler: BaseHandler {
     var dataProfile: ProfileDisplayData? = null
     var profileEditPresenter: ProfileEditPresenter? = null
     var accessToken: String? = null
-    var imageid: Int? = null
+    var action: String? = null
 
-    constructor(token: String, data:ProfileDisplayData, presenter: ProfileEditPresenter) {
+    constructor(token: String, data:ProfileDisplayData, presenter: ProfileEditPresenter, action: String) {
         accessToken = token
-        imageid  = data.imageId
-//        dataparams?.put(REQUEST_NAME_IMAGE_ID, data.imageId)
-//        img_id = data.imageId
-//        dataparams?.put(REQUEST_NAME_IMAGE_ID, data.imageId)
-//        dataparams?.put(REQUEST_NAME_NICKNAME, data.nickname!!)
-//        dataparams?.put(REQUEST_NAME_RESIDENCE, data.residence!!)
-//        dataparams?.put(REQUEST_NAME_GENDER, data.gender)
-//        dataparams?.put(REQUEST_NAME_JOB, data.job)
+        dataparams?.put(REQUEST_NAME_IMAGE_ID, data.imageId)
+        dataparams?.put(REQUEST_NAME_NICKNAME, data.nickname!!)
+        dataparams?.put(REQUEST_NAME_RESIDENCE, data.residence!!)
+        dataparams?.put(REQUEST_NAME_GENDER, data.gender)
+        dataparams?.put(REQUEST_NAME_JOB, data.job)
+        dataparams?.put(REQUEST_NAME_BIRTHDAY, data.birthday!!)
+        dataparams?.put(REQUEST_NAME_HOBBY, data.hobby!!)
+        dataparams?.put(REQUEST_NAME_PERSONALITY, data.personality)
+        dataparams?.put(REQUEST_NAME_ABOUT_ME, data.aboutMe!!)
 
+        this.action = action
         profileEditPresenter = presenter
     }
 
@@ -53,7 +58,7 @@ class ProfileEditHandler: BaseHandler {
 
     fun editProfileAction() {
         try {
-            getProfileEditServices()?.getEditProfile(API_CTRL_NAME_PROFILE, API_ACTION_NAME_PROFILE_EDIT, accessToken!!, imageid!!)
+            getProfileEditServices()?.getEditProfile(API_CTRL_NAME_PROFILE, API_ACTION_NAME_PROFILE_EDIT, accessToken!!, dataparams!!)
                     ?.subscribeOn(Schedulers.newThread())
                     ?.observeOn(AndroidSchedulers.mainThread())
                     ?.subscribe(object : Observer<BaseResultData>{
@@ -64,7 +69,7 @@ class ProfileEditHandler: BaseHandler {
                         }
 
                         override fun onNext(t: BaseResultData) {
-                            profileEditPresenter?.isSuccessEditProfile(t)
+                            profileEditPresenter?.isSuccessEditProfile(t, action!!)
                             println("ERROR API: " +t.errorData?.errorMessage)
                         }
 

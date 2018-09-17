@@ -9,7 +9,6 @@ import android.preference.EditTextPreference
 import android.provider.MediaStore
 import android.view.View
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_GALLERY_ACTIVITY
-import jp.co.terraresta.androidlesson.common.Constants.REQUEST_CODE_UPDATE_PP
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_DATA
 import jp.co.terraresta.androidlesson.common.Preferences
 import jp.co.terraresta.androidlesson.data.handler.media.ImageUploadHandler
