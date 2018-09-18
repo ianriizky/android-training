@@ -103,11 +103,19 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
         var profileViewModel = ProfileEditViewModel()
         profileViewModel.nickname = profileDisplayData?.nickname!!
         profileViewModel.aboutme = profileDisplayData?.aboutMe!!
-        profileViewModel.birthday = profileDisplayData?.birthday!!
+        if(profileDisplayData?.birthday != null){
+            profileViewModel.birthday = profileDisplayData?.birthday!!
+        } else {
+           profileViewModel.birthday ="YYYY/MM/DD"
+        }
+        if(profileDisplayData?.residence != ""){
+            profileViewModel.residence = profileDisplayData?.residence!!
+        } else {
+            profileViewModel.residence = arrResidence!![0]
+        }
         profileViewModel.gender =  arrGender!![profileDisplayData?.gender!!]
         profileViewModel.personality = arrPersonal!![profileDisplayData?.personality!!]
         profileViewModel.job = arrJob!![profileDisplayData?.job!!]
-        profileViewModel.residence = profileDisplayData?.residence!!
         for(i in arrHobby!!.indices){
             if(profileDisplayData?.hobby!! != ""){
                 if(i.toString() == profileDisplayData?.hobby!![i].toString()){
