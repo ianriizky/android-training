@@ -116,13 +116,17 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
         profileViewModel.gender =  arrGender!![profileDisplayData?.gender!!]
         profileViewModel.personality = arrPersonal!![profileDisplayData?.personality!!]
         profileViewModel.job = arrJob!![profileDisplayData?.job!!]
-        for(i in arrHobby!!.indices){
-            if(profileDisplayData?.hobby!! != ""){
-                if(i.toString() == profileDisplayData?.hobby!![i].toString()){
-                    profileViewModel.hobby = tv_hobby.text.toString().plus("- " +arrHobby[i])
+        if(arrHobby?.size != profileDisplayData?.hobby!!.length){
+           profileViewModel.hobby = ""
+        } else {
+            for(i in arrHobby!!.indices){
+                if(profileDisplayData?.hobby!! != ""){
+                    if(i.toString() == profileDisplayData?.hobby!![i].toString()){
+                        profileViewModel.hobby = tv_hobby.text.toString().plus("- " +arrHobby[i])
+                    }
+                } else {
+                    profileViewModel.hobby = ""
                 }
-            } else {
-                profileViewModel.hobby = ""
             }
         }
         profileBinding.profileModel = profileViewModel
