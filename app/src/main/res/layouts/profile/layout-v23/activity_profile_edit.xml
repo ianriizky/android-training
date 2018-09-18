@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="profileModel"
+            type="jp.co.terraresta.androidlesson.view.view_model.profile.ProfileEditViewModel" />
+    </data>
+<ScrollView
     android:scrollbars="vertical"
     android:scrollbarStyle="insideOverlay"
     android:scrollIndicators="right"
@@ -40,6 +48,7 @@
                     android:layout_height="match_parent" />
                 <EditText
                     android:id="@+id/nickname"
+                    android:text="@={profileModel.nickname}"
                     android:inputType="text"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -69,7 +78,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:text="YYYY/MM/DD"
+                    android:text="@={profileModel.birthday}"
                     android:id="@+id/tv_birthday"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -102,6 +111,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
+                    android:text="@={profileModel.gender}"
                     android:id="@+id/tv_gender"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -134,6 +144,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
+                    android:text="@={profileModel.job}"
                     android:id="@+id/tv_job"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -166,6 +177,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
+                    android:text="@={profileModel.residence}"
                     android:id="@+id/tv_residence"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -198,6 +210,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
+                    android:text="@={profileModel.hobby}"
                     android:id="@+id/tv_hobby"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -230,6 +243,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
+                    android:text="@={profileModel.personality}"
                     android:id="@+id/tv_personal"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -260,6 +274,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <EditText
+                    android:text="@={profileModel.aboutme}"
                     android:scrollIndicators="left"
                     android:scrollbarStyle="insideOverlay"
                     android:scrollbars="vertical"
@@ -276,3 +291,4 @@
 
     </LinearLayout> <!-- end of wrapper -->
 </ScrollView>
+</layout>

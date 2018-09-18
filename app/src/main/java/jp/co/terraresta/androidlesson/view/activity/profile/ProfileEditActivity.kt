@@ -20,12 +20,15 @@ import java.util.zip.Inflater
 import android.graphics.drawable.ColorDrawable
 import jp.co.terraresta.androidlesson.MainActivity
 import android.content.DialogInterface
+import android.databinding.DataBindingUtil
 import android.graphics.Color
 import java.util.*
 import android.databinding.adapters.TextViewBindingAdapter.setText
 import android.widget.DatePicker
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_KEY_PROFILE_DATA
 import jp.co.terraresta.androidlesson.data.model.common.BaseResultData
+import jp.co.terraresta.androidlesson.databinding.ActivityProfileEditBinding
+import jp.co.terraresta.androidlesson.view.view_model.profile.ProfileEditViewModel
 import org.w3c.dom.Text
 
 
@@ -55,15 +58,16 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
     var profileDisplayData: ProfileDisplayData? = null
     private var mDateSetListener: DatePickerDialog.OnDateSetListener? = null
     var loading: ProgressDialog? = null
+    lateinit var profileBinding: ActivityProfileEditBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        setSupportActionBar(edit_toolbar)
 
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar()?.setDisplayShowHomeEnabled(true);
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile_edit)
+        profileBinding = DataBindingUtil.setContentView(this, R.layout.activity_profile_edit)
+//       setContentView(R.layout.activity_profile_edit)
         initView()
     }
 
@@ -95,18 +99,33 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
         var title: String? = null
         var action: Int? = null
 
-        tv_personal.text = arrPersonal!![profileDisplayData?.personality!!]
-        tv_gender.text = arrGender!![profileDisplayData?.gender!!]
-        tv_job.text = arrJob!![profileDisplayData?.job!!]
-        tv_residence.text = profileDisplayData?.residence
-        tv_birthday.text = profileDisplayData?.birthday
-        aboutme.setText(profileDisplayData?.aboutMe, TextView.BufferType.EDITABLE)
-        nickname.setText(profileDisplayData?.nickname, TextView.BufferType.EDITABLE)
+
+        var profileViewModel = ProfileEditViewModel()
+        profileViewModel.nickname = profileDisplayData?.nickname!!
+        profileViewModel.aboutme = profileDisplayData?.aboutMe!!
+        profileViewModel.birthday = profileDisplayData?.birthday!!
+        profileViewModel.gender =  arrGender!![profileDisplayData?.gender!!]
+        profileViewModel.personality = arrPersonal!![profileDisplayData?.personality!!]
+        profileViewModel.job = arrJob!![profileDisplayData?.job!!]
+        profileViewModel.residence = profileDisplayData?.residence!!
         for(i in arrHobby!!.indices){
-            if(i.toString() == profileDisplayData?.hobby!![i].toString()){
-                tv_hobby.text = tv_hobby.text.toString().plus("-" +arrHobby[i])
+            if(profileDisplayData?.hobby!! != ""){
+                if(i.toString() == profileDisplayData?.hobby!![i].toString()){
+                    profileViewModel.hobby = tv_hobby.text.toString().plus("- " +arrHobby[i])
+                }
+            } else {
+                profileViewModel.hobby = ""
             }
         }
+        profileBinding.profileModel = profileViewModel
+
+//        tv_personal.text = arrPersonal!![profileDisplayData?.personality!!]
+//        tv_gender.text = arrGender!![profileDisplayData?.gender!!]
+//        tv_job.text = arrJob!![profileDisplayData?.job!!]
+//        tv_residence.text = profileDisplayData?.residence
+//        tv_birthday.text = profileDisplayData?.birthday
+//        aboutme.setText(profileDisplayData?.aboutMe, TextView.BufferType.EDITABLE)
+//        nickname.setText(profileDisplayData?.nickname, TextView.BufferType.EDITABLE)
 
         // gender opions
         gender.setOnClickListener {
@@ -198,7 +217,7 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
        val arrChecked = BooleanArray(arr!!.size)
 
        for(i in arr.indices){
-           if(profileDisplayData?.hobby!![i].toString() != ""){
+           if(profileDisplayData?.hobby!! != ""){
                if(profileDisplayData?.hobby!![i].toString() == i.toString()){
                     arrChecked[i]= true
                }

@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+       <variable
+           name="profileModel"
+           type="jp.co.terraresta.androidlesson.view.view_model.profile.ProfileEditViewModel" />
+    </data>
+
+<ScrollView
     android:scrollbars="vertical"
     android:scrollbarStyle="insideOverlay"
     android:scrollIndicators="right"
@@ -39,6 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <EditText
+                    android:text="@={profileModel.nickname}"
                     android:id="@+id/nickname"
                     android:inputType="text"
                     android:gravity="center_vertical"
@@ -69,7 +79,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:text="YYYY/MM/DD"
+                    android:text="@={profileModel.birthday}"
                     android:id="@+id/tv_birthday"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -275,3 +285,4 @@
 
     </LinearLayout> <!-- end of wrapper -->
 </ScrollView>
+</layout>
