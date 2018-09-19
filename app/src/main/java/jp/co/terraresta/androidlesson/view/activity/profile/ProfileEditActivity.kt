@@ -24,12 +24,15 @@ import android.databinding.DataBindingUtil
 import android.graphics.Color
 import java.util.*
 import android.databinding.adapters.TextViewBindingAdapter.setText
+import android.text.BoringLayout
 import android.widget.DatePicker
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_KEY_PROFILE_DATA
 import jp.co.terraresta.androidlesson.data.model.common.BaseResultData
 import jp.co.terraresta.androidlesson.databinding.ActivityProfileEditBinding
 import jp.co.terraresta.androidlesson.view.view_model.profile.ProfileEditViewModel
 import org.w3c.dom.Text
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 
 /**
@@ -59,6 +62,7 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
     private var mDateSetListener: DatePickerDialog.OnDateSetListener? = null
     var loading: ProgressDialog? = null
     lateinit var profileBinding: ActivityProfileEditBinding
+    var profileViewModel: ProfileEditViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -85,50 +89,61 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
         return true
     }
 
+
     fun initView(){
         val intent:Intent = intent
         profileDisplayData = intent.getSerializableExtra(REQUEST_KEY_PROFILE_DATA) as ProfileDisplayData
         profileEditPref = Preferences()
         profileEditPresenter = ProfileEditPresenter(this, profileEditPref!!)
 
+        var arrHobby: Array<String>? = resources.getStringArray(R.array.hobby)
         var arrGender: Array<String>? = resources.getStringArray(R.array.sex)
         var arrJob: Array<String>? = resources.getStringArray(R.array.job)
         var arrResidence: Array<String>? = resources.getStringArray(R.array.residence)
         var arrPersonal: Array<String>? = resources.getStringArray(R.array.personality)
-        var arrHobby: Array<String>? = resources.getStringArray(R.array.hobby)
         var title: String? = null
         var action: Int? = null
+        var checkedItem = BooleanArray(arrHobby!!.size)
+
+        // SET DEFAULT DATE
+        val mFormat = DecimalFormat("00")
+        val cal = Calendar.getInstance()
+        val year = cal.get(Calendar.YEAR)
+        val month = cal.get(Calendar.MONTH)
+        val day = cal.get(Calendar.DAY_OF_MONTH)
+
+        val finalmonth = mFormat.format(java.lang.Double.valueOf(month.toString()))
+        val finalday = mFormat.format(java.lang.Double.valueOf(day.toString()))
+        var finaldate: String = year.toString() + "/" + finalmonth + "/" + finalday
 
 
-        var profileViewModel = ProfileEditViewModel()
-        profileViewModel.nickname = profileDisplayData?.nickname!!
-        profileViewModel.aboutme = profileDisplayData?.aboutMe!!
-        if(profileDisplayData?.birthday != null){
-            profileViewModel.birthday = profileDisplayData?.birthday!!
-        } else {
-           profileViewModel.birthday ="YYYY/MM/DD"
-        }
-        if(profileDisplayData?.residence != ""){
-            profileViewModel.residence = profileDisplayData?.residence!!
-        } else {
-            profileViewModel.residence = arrResidence!![0]
-        }
-        profileViewModel.gender =  arrGender!![profileDisplayData?.gender!!]
-        profileViewModel.personality = arrPersonal!![profileDisplayData?.personality!!]
-        profileViewModel.job = arrJob!![profileDisplayData?.job!!]
-        if(arrHobby?.size != profileDisplayData?.hobby!!.length){
-           profileViewModel.hobby = ""
-        } else {
-            for(i in arrHobby!!.indices){
-                if(profileDisplayData?.hobby!! != ""){
-                    if(i.toString() == profileDisplayData?.hobby!![i].toString()){
-                        profileViewModel.hobby = tv_hobby.text.toString().plus("- " +arrHobby[i])
-                    }
-                } else {
-                    profileViewModel.hobby = ""
-                }
+        profileViewModel = ProfileEditViewModel()
+        profileViewModel!!.nickname = profileDisplayData?.nickname!!
+        profileViewModel!!.aboutme = profileDisplayData?.aboutMe!!
+        // intialize birthday data
+        if(profileDisplayData?.birthday != null) {
+            if(profileDisplayData?.birthday != finaldate){
+                profileViewModel!!.birthday = profileDisplayData?.birthday!!
+            } else {
+                profileViewModel!!.birthday = "YYYY/MM/DD"
+                profileDisplayData?.birthday = finaldate
             }
+        } else {
+            profileViewModel!!.birthday = "YYYY/MM/DD"
+            profileDisplayData?.birthday = finaldate
         }
+        // intialize residence data
+        if(profileDisplayData?.residence != ""){
+            profileViewModel!!.residence = profileDisplayData?.residence!!
+        } else {
+            profileViewModel!!.residence = arrResidence!![0]
+        }
+        profileViewModel!!.gender =  arrGender!![profileDisplayData?.gender!!]
+        profileViewModel!!.personality = arrPersonal!![profileDisplayData?.personality!!]
+        profileViewModel!!.job = arrJob!![profileDisplayData?.job!!]
+        // inttialize hobby data
+        setHobby(arrHobby!!, profileViewModel!!, checkedItem)
+
         profileBinding.profileModel = profileViewModel
 
 //        tv_personal.text = arrPersonal!![profileDisplayData?.personality!!]
@@ -174,13 +189,37 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
         }
 
         hobby.setOnClickListener {
-            dialogMultiChoice(arrHobby!!)
+            dialogMultiChoice(arrHobby!!, checkedItem)
         }
 
         // birthday options
         birthday.setOnClickListener {
             dialogDateTime()
         }
+    }
+
+    // SET HOBBY VALUE
+    fun setHobby(arr: Array<String>, model:ProfileEditViewModel, checkedItem:BooleanArray){
+        var arrHobby = arr
+        model.hobby = ""
+        var hobbyList= profileDisplayData?.hobby!!.replace(",", "")
+        var tempHobby: Array<String>? = Array(arrHobby.size){""}
+        val codeHobby = Array(arrHobby!!.size) {it}
+
+        for(i in codeHobby.indices){
+            if(hobbyList.length != 0){
+                for(j in 0..hobbyList.length-1){
+                    if(codeHobby[i].toString() == hobbyList[j].toString()){
+                        tempHobby!![i] = hobbyList[j].toString()
+                    }
+                }
+                if(tempHobby!![i] == codeHobby[i].toString()){
+                    model.hobby = model.hobby.plus("- " +arrHobby[i])
+                    checkedItem[i] = true
+                }
+            }
+        }
+
     }
 
     /*
@@ -223,18 +262,10 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
     /*
     * MULTI CHOICE DIALOG MASSAGE
      */
-   fun dialogMultiChoice(array: Array<String>){
+   fun dialogMultiChoice(array: Array<String>, boolArray: BooleanArray){
        val arr = array
        val strings = Array(arr!!.size) { "-" }
-       val arrChecked = BooleanArray(arr!!.size)
-
-       for(i in arr.indices){
-           if(profileDisplayData?.hobby!! != ""){
-               if(profileDisplayData?.hobby!![i].toString() == i.toString()){
-                    arrChecked[i]= true
-               }
-           }
-       }
+       val arrChecked = boolArray
 
        val dialog:AlertDialog.Builder = AlertDialog.Builder(this, R.style.MaterialThemeDialog)
        dialog?.setTitle("Pick your hobby")
@@ -247,11 +278,9 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
            tv_hobby.text = ""
            for (j in arr.indices){
                if(arrChecked[j]){
-                  strings[j] = j.toString()
+                   hobbyString =  hobbyString.plus(j.toString() +",")
                    tv_hobby.text = tv_hobby.text.toString().plus("-" +arr[j])
                }
-               hobbyString = hobbyString.plus(strings[j])
-
            }
            profileDisplayData?.hobby = hobbyString
        }
@@ -263,8 +292,6 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
        val alertDialog = dialog.create()
        alertDialog.show()
    }
-
-
 
     /*
     * DATETIME DIALOG MESSAGE
@@ -352,6 +379,7 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
            R.id.profile_save -> {
+               println("BIRTHDAY: " +profileDisplayData?.birthday)
                profileDisplayData?.nickname = nickname.text.toString().trim()
                profileDisplayData?.aboutMe = aboutme.text.toString().trim()
                profileDisplayData?.imageId = 0

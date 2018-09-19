@@ -112,6 +112,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
+                    android:text="@={profileModel.gender}"
                     android:id="@+id/tv_gender"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -144,6 +145,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
+                    android:text="@={profileModel.job}"
                     android:id="@+id/tv_job"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -176,6 +178,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
+                    android:text="@={profileModel.residence}"
                     android:id="@+id/tv_residence"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -208,6 +211,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
+                    android:text="@={profileModel.hobby}"
                     android:id="@+id/tv_hobby"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -240,6 +244,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
+                    android:text="@{profileModel.personality}"
                     android:id="@+id/tv_personal"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
@@ -270,6 +275,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <EditText
+                    android:text="@={profileModel.aboutme}"
                     android:scrollHorizontally="true"
                     android:scrollbars="vertical"
                     android:id="@+id/aboutme"
