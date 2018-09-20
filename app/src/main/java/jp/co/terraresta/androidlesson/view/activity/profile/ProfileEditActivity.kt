@@ -59,6 +59,7 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
     var profileEditPresenter: ProfileEditContract.Presenter? = null
     var profileEditPref: Preferences? = null
     var profileDisplayData: ProfileDisplayData? = null
+    var tempProfileDisplayData: ProfileDisplayData? = null
     private var mDateSetListener: DatePickerDialog.OnDateSetListener? = null
     var loading: ProgressDialog? = null
     lateinit var profileBinding: ActivityProfileEditBinding
@@ -85,17 +86,53 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        dialogMessageExit()
-        return true
+        println("residence-temp: " +tempProfileDisplayData?.residence)
+        println("residence-up: " +profileDisplayData?.residence)
+        println("CHECKED: " +formCheck())
+//            dialogMessageExit()
+        if(!formCheck()){
+            dialogMessageExit()
+        } else {
+            super.onBackPressed()
+            finish()
+        }
+        return super.onSupportNavigateUp()
+    }
+
+    fun formCheck(): Boolean{
+        var checked: Boolean? = false
+//        if(tempProfileDisplayData?.gender == profileDisplayData?.gender){
+        if(tempProfileDisplayData?.nickname == nickname.text.toString().trim() &&
+                tempProfileDisplayData?.birthday == profileDisplayData?.birthday &&
+                tempProfileDisplayData?.gender == profileDisplayData?.gender &&
+                tempProfileDisplayData?.job == profileDisplayData?.job &&
+                tempProfileDisplayData?.residence == profileDisplayData?.residence &&
+                tempProfileDisplayData?.hobby == profileDisplayData?.hobby &&
+                tempProfileDisplayData?.personality == profileDisplayData?.personality &&
+                tempProfileDisplayData?.aboutMe == profileDisplayData?.aboutMe){
+            checked = true
+        }
+       return checked!!
     }
 
 
     fun initView(){
-        val intent:Intent = intent
-        profileDisplayData = intent.getSerializableExtra(REQUEST_KEY_PROFILE_DATA) as ProfileDisplayData
         profileEditPref = Preferences()
         profileEditPresenter = ProfileEditPresenter(this, profileEditPref!!)
+        val intent:Intent = intent
+        profileDisplayData = intent.getSerializableExtra(REQUEST_KEY_PROFILE_DATA) as ProfileDisplayData
 
+        // temp profile
+        tempProfileDisplayData = ProfileDisplayData()
+        tempProfileDisplayData!!.residence = profileDisplayData!!.residence
+        tempProfileDisplayData!!.gender = profileDisplayData!!.gender
+        tempProfileDisplayData!!.nickname = profileDisplayData!!.nickname
+        tempProfileDisplayData!!.job = profileDisplayData!!.job
+        tempProfileDisplayData!!.hobby = profileDisplayData!!.hobby
+        tempProfileDisplayData!!.personality = profileDisplayData!!.personality
+        tempProfileDisplayData!!.aboutMe = profileDisplayData!!.aboutMe
+
+        // intit temp variabel
         var arrHobby: Array<String>? = resources.getStringArray(R.array.hobby)
         var arrGender: Array<String>? = resources.getStringArray(R.array.sex)
         var arrJob: Array<String>? = resources.getStringArray(R.array.job)
@@ -132,15 +169,38 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
             profileViewModel!!.birthday = "YYYY/MM/DD"
             profileDisplayData?.birthday = finaldate
         }
+        tempProfileDisplayData!!.birthday = profileDisplayData!!.birthday
+
         // intialize residence data
         if(profileDisplayData?.residence != ""){
             profileViewModel!!.residence = profileDisplayData?.residence!!
         } else {
-            profileViewModel!!.residence = arrResidence!![0]
+            profileViewModel!!.residence = ""
         }
-        profileViewModel!!.gender =  arrGender!![profileDisplayData?.gender!!]
-        profileViewModel!!.personality = arrPersonal!![profileDisplayData?.personality!!]
-        profileViewModel!!.job = arrJob!![profileDisplayData?.job!!]
+
+        //initialize gender data
+        if(profileDisplayData?.gender == 0){
+            profileViewModel!!.gender = ""
+        } else {
+            profileViewModel!!.gender = arrGender!![profileDisplayData?.gender!!]
+        }
+
+        //initialize personality data
+        if(profileDisplayData?.personality == 0){
+           profileViewModel!!.personality = ""
+        } else {
+
+            profileViewModel!!.personality = arrPersonal!![profileDisplayData?.personality!!]
+        }
+
+        // intialize job data
+        if(profileDisplayData?.job == 0){
+            profileViewModel!!.job = ""
+        } else {
+
+            profileViewModel!!.job = arrJob!![profileDisplayData?.job!!]
+        }
+
         // inttialize hobby data
         setHobby(arrHobby!!, profileViewModel!!, checkedItem)
 
@@ -242,6 +302,8 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
                 R.id.residence -> {
                     profileDisplayData?.residence = arr[i]
                     tv_residence.text = arr[i]
+                    println("temp-residence: " +tempProfileDisplayData!!.residence)
+                    println("residence: " +profileDisplayData!!.residence)
                 }
                 R.id.personal -> {
                     profileDisplayData?.personality = i
