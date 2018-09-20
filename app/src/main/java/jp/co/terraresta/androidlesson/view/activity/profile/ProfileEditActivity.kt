@@ -77,19 +77,15 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
     }
 
     override fun onBackPressed() {
-        if(profileUpdate){
-            finish()
-           super.onBackPressed()
-        } else {
+        if(!formCheck() && !profileUpdate){
             dialogMessageExit()
+        } else {
+            finish()
+            super.onBackPressed()
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        println("residence-temp: " +tempProfileDisplayData?.residence)
-        println("residence-up: " +profileDisplayData?.residence)
-        println("CHECKED: " +formCheck())
-//            dialogMessageExit()
         if(!formCheck()){
             dialogMessageExit()
         } else {
