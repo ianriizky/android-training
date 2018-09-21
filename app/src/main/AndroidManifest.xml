@@ -49,11 +49,15 @@
             android:name=".view.activity.login.LoginActivity"
             android:label="@string/login_title"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".WebViewActivity"></activity>
+        <activity android:name=".WebViewActivity">
+        </activity>
         <activity
             android:name=".view.activity.profile.ProfileEditActivity"
-            android:label="@string/edit_profile_title"
-            ></activity>
+            android:label="@string/edit_profile_title">
+        </activity>
+        <activity android:name=".view.activity.profile.ProfileDisplayActivity"
+            android:label="@string/profile_display_title">
+        </activity>
     </application>
 
 </manifest>

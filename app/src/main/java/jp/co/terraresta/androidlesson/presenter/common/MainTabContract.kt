@@ -8,7 +8,6 @@ import android.content.Context
 
 interface MainTabContract {
     interface View  {
-        fun getContext():Context
     }
     interface Presenter {
 

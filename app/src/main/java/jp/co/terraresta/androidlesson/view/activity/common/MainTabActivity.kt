@@ -18,10 +18,6 @@ import kotlinx.android.synthetic.main.activity_main_tab.*
  */
 
 class MainTabActivity : AppCompatActivity(),  MainTabContract.View{
-    override fun getContext(): Context {
-        return this
-    }
-
     var viewPager: ViewPager? = null
     var tabPresenter: MainTabPresenter? = null
 
