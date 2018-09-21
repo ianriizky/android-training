@@ -33,7 +33,14 @@ import jp.co.terraresta.androidlesson.view.adapter.profile_feed.ProfileFeedAdapt
 */
 
 class ProfileFeedFragment : android.support.v4.app.Fragment(), ProfileFeedContract.View {
-override fun showError(msg: String) {
+    override fun setNextRess(data: ProfileFeedData) {
+        for(i in data.items!!.indices){
+            this.data.add(data.items!![i])
+        }
+        adapter?.notifyDataSetChanged()
+    }
+
+    override fun showError(msg: String) {
     showError(msg)
 }
 
@@ -41,10 +48,10 @@ override fun setRess(data: ProfileFeedData) {
     for(i in data.items!!.indices){
         this.data.add(data.items!![i])
     }
-    adapter  = ProfileFeedAdapter(this.data, this.context)
+
     recycleView!!.adapter = adapter
     adapter?.notifyDataSetChanged()
-//    recycleView!!.adapter = adapter
+
     pullRefresher?.setRefreshing(false)
     loadProgress!!.visibility = View.VISIBLE
 }
@@ -74,6 +81,8 @@ override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, save
         profileFeedPresenter = ProfileFeedPresenter(this.context, this)
         profileFeedPresenter?.fetchProfileFeed()
 
+        adapter  = ProfileFeedAdapter(data, this.context)
+
         pullRefresher = feedView?.findViewById(R.id.pull_refresh_container) as SwipeRefreshLayout
         loadProgress = feedView?.findViewById(R.id.item_progress) as ProgressBar
         recycleView = feedView?.findViewById(R.id.rv_profilefeed) as RecyclerView
@@ -99,8 +108,8 @@ override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, save
                     var lastItem = layout.findLastCompletelyVisibleItemPosition()
                     var current = layout.itemCount
                     if(current <= lastItem+2){
-                        profileFeedPresenter?.fetchProfileFeed()
-                        layout.scrollToPosition(lastItem)
+
+                        profileFeedPresenter?.fetchProfileNext()
                     }
 
                 }

@@ -15,10 +15,12 @@ interface ProfileFeedContract {
     }
     interface View{
         fun setRess(data:ProfileFeedData)
+        fun setNextRess(data:ProfileFeedData)
         fun showError(msg:String)
     }
 
     interface Presenter{
+        fun fetchProfileNext()
         fun fetchProfileFeed()
         fun isSuccessFetchFeed(data:ProfileFeedData)
     }
