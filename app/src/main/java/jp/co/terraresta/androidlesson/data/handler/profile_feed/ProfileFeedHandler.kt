@@ -22,19 +22,17 @@ class ProfileFeedHandler: BaseHandler {
     var params: MutableMap<String, Any>? = HashMap()
     var profileFeedPresenter: ProfileFeedPresenter? = null
 
-    constructor(token: String, lastlogin: String, presenter:ProfileFeedPresenter){
-        params?.put(REQUEST_NAME_ACCESS_TOKEN, token)
-        params?.put(REQUEST_NAME_LAST_LOGIN_TIME, lastlogin)
-
+    constructor( presenter:ProfileFeedPresenter){
         profileFeedPresenter = presenter
-
     }
 
     fun getProfileFeedServices(): ProfileFeedContract.Services? {
         return RestClient()?.create(ProfileFeedContract.Services::class.java)
     }
 
-    fun fetchFeedAction(){
+    fun fetchFeedAction(token: String, lastlogin: String){
+        params?.put(REQUEST_NAME_ACCESS_TOKEN, token)
+        params?.put(REQUEST_NAME_LAST_LOGIN_TIME, lastlogin)
         try {
             getProfileFeedServices()?.getFeedData(API_CTRL_NAME_PROFILE_FEED, API_ACTION_NAME_PROFILE_FEED, params!!)
                     ?.subscribeOn(Schedulers.newThread())

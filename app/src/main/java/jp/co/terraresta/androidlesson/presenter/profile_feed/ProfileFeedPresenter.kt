@@ -14,7 +14,8 @@ import java.util.*
 class ProfileFeedPresenter(ctx:Context, view:ProfileFeedContract.View): ProfileFeedContract.Presenter {
     override fun isSuccessFetchFeed(data: ProfileFeedData) {
         if(data.status == 1){
-           profileFeedView.setRess(data)
+                profileFeedView.setRess(data)
+                lastLogin = data.lastLoginTime!!
         } else {
             profileFeedView.showError(data.errorData?.errorMessage!!)
         }
@@ -24,13 +25,11 @@ class ProfileFeedPresenter(ctx:Context, view:ProfileFeedContract.View): ProfileF
     var profileFeedView = view
     var pref: Preferences = Preferences()
     var profileFeedHandler:ProfileFeedHandler? = null
+    var lastLogin: String = ""
 
     override fun fetchProfileFeed() {
-        var date = Calendar.getInstance().time
-        var local = date.toLocaleString()
-        println("DATE: " +local)
-        profileFeedHandler  = ProfileFeedHandler(pref.getToken(profileFeedCtx), local, this)
-        profileFeedHandler?.fetchFeedAction()
+        profileFeedHandler  = ProfileFeedHandler( this)
+        profileFeedHandler?.fetchFeedAction(pref.getToken(profileFeedCtx), lastLogin)
     }
 
 }

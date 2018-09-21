@@ -11,6 +11,8 @@ import retrofit2.http.QueryMap
  */
 
 interface ProfileFeedContract {
+    interface scrollListner{
+    }
     interface View{
         fun setRess(data:ProfileFeedData)
         fun showError(msg:String)

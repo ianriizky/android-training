@@ -20,6 +20,7 @@ import android.os.Handler
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
 import android.widget.GridLayout
+import android.widget.ProgressBar
 import jp.co.terraresta.androidlesson.data.model.profile_feed.ProfileFeedData
 import jp.co.terraresta.androidlesson.data.model.profile_feed.ProfileFeedItem
 import jp.co.terraresta.androidlesson.presenter.profile_feed.ProfileFeedContract
@@ -37,22 +38,29 @@ override fun showError(msg: String) {
 }
 
 override fun setRess(data: ProfileFeedData) {
-    data.items
-    adapter  = ProfileFeedAdapter(data.items!!, this.context)
+    for(i in data.items!!.indices){
+        this.data.add(data.items!![i])
+    }
+    adapter  = ProfileFeedAdapter(this.data, this.context)
     recycleView!!.adapter = adapter
+    adapter?.notifyDataSetChanged()
+//    recycleView!!.adapter = adapter
     pullRefresher?.setRefreshing(false)
+    loadProgress!!.visibility = View.VISIBLE
 }
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 }
 
+    var dataprofile: MutableList<ProfileFeedItem>? = null
 var profileFeedPresenter: ProfileFeedContract.Presenter? = null
 var layoutManager: RecyclerView.LayoutManager? = null
 var recycleView: RecyclerView? = null
 var pullRefresher: SwipeRefreshLayout? = null
+var loadProgress: ProgressBar? = null
 var adapter: RecyclerView.Adapter<*>? = null
-private var data: List<ProfileFeedItem>? = null
+private var data: MutableList<ProfileFeedItem> = ArrayList()
 var loading: ProgressDialog? = null
 var feedView: View? = null
 
@@ -67,21 +75,46 @@ override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, save
         profileFeedPresenter?.fetchProfileFeed()
 
         pullRefresher = feedView?.findViewById(R.id.pull_refresh_container) as SwipeRefreshLayout
+        loadProgress = feedView?.findViewById(R.id.item_progress) as ProgressBar
         recycleView = feedView?.findViewById(R.id.rv_profilefeed) as RecyclerView
         layoutManager = GridLayoutManager(this.context, 2)
         recycleView?.layoutManager = layoutManager
         recycleView?.itemAnimator = DefaultItemAnimator()
 
+        loadProgress!!.visibility = View.GONE
         pullRefresher!!.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
                 reloadData()
             }
 
         })
+
+        recycleView?.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if(dy > 0) //check for scroll down
+                {
+                    var layout = recyclerView?.layoutManager as GridLayoutManager
+                    var lastItem = layout.findLastCompletelyVisibleItemPosition()
+                    var current = layout.itemCount
+                    if(current <= lastItem+2){
+                        profileFeedPresenter?.fetchProfileFeed()
+                        layout.scrollToPosition(lastItem)
+                    }
+
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+        })
     }
 
     fun reloadData(){
         profileFeedPresenter?.fetchProfileFeed()
+        loadProgress!!.visibility = View.VISIBLE
     }
 
     fun alertError(message: String) {

@@ -21,7 +21,11 @@ import jp.co.terraresta.androidlesson.view.activity.profile.ProfileDisplayActivi
  * Created by ooyama on 2017/05/29.
  */
 
-class ProfileFeedAdapter(data: List<ProfileFeedItem>, ctx: Context): RecyclerView.Adapter<ProfileFeedAdapter.MyViewHolder>() {
+class ProfileFeedAdapter(data: MutableList<ProfileFeedItem>, ctx: Context): RecyclerView.Adapter<ProfileFeedAdapter.MyViewHolder>() {
+
+    fun getData(data: List<ProfileFeedItem>){
+       dataset = data
+    }
 
     var dataset:List<ProfileFeedItem> = data
     var context: Context = ctx
