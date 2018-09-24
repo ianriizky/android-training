@@ -28,8 +28,8 @@
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:id="@+id/iv_photo_profile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="200dp"
+                            android:layout_height="200dp"
                             android:adjustViewBounds="true"
                             android:contentDescription="@string/app_name"
                             android:scaleType="centerCrop" />
@@ -97,7 +97,7 @@
                             android:textColor="@color/text_color_black"
                             android:gravity="center_vertical"
                             android:layout_weight="1"
-                            android:text="@string/profile_title_birthday"
+                            android:text="Age"
                             android:layout_width="0dp"
                             android:layout_height="match_parent" />
                         <TextView

@@ -18,6 +18,7 @@ import jp.co.terraresta.androidlesson.presenter.profile.ProfileDisplayPresenter
 import jp.co.terraresta.androidlesson.view.activity.media.PhotoViewerActivity
 import jp.co.terraresta.androidlesson.view.activity.talk.TalkActivity
 import kotlinx.android.synthetic.main.activity_profile_display.*
+import java.util.*
 
 /**
  * Created by ooyama on 2017/05/29.
@@ -62,7 +63,7 @@ class ProfileDisplayActivity : AppCompatActivity(), ProfileDisplayContract.View 
 
         if(data.birthday != null){
             birthday.visibility = View.VISIBLE
-            tv_birthday.text = data.birthday
+            tv_birthday.text =  setAge(data.birthday!!)
         }
 
         setHobby(arrHobby!!, data)
@@ -131,6 +132,14 @@ class ProfileDisplayActivity : AppCompatActivity(), ProfileDisplayContract.View 
 
         profileDisplayPresenter?.fetchUserData(uid!!)
         loader()
+    }
+
+    fun setAge(birthday: String): String{
+        val yearNow = Calendar.getInstance().get(Calendar.YEAR)
+        var year = birthday.slice(0..3).toInt()
+        var finalyear = yearNow - year
+
+        return finalyear.toString()
     }
 
     fun setHobby(arr: Array<String>, profileDisplayData: ProfileDisplayData){
