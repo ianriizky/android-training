@@ -10,10 +10,16 @@
         <item name="actionButtonStyle">@style/AppTheme.Widget.ActionButton</item>
     </style>
 
-    <!-- base app theme no actionbar -->
+    <!-- photo view app theme no actionbar -->
 <style name="AppThemeNoAction" parent="Theme.AppCompat.Light.NoActionBar">
+    <item   name="android:homeAsUpIndicator">@drawable/ic_arrow_back_black_24dp</item>
     <item name="android:windowNoTitle">true</item>
 </style>
+
+    <!-- base app theme no actionbar -->
+    <style name="AppThemeNoActionBase" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
     <style name="MaterialThemeDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/colorAccent</item>
@@ -31,4 +37,8 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
 </resources>

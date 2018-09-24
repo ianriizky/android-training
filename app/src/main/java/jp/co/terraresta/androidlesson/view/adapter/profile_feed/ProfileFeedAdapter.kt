@@ -13,6 +13,7 @@ import jp.co.terraresta.androidlesson.MainActivity
 import android.view.LayoutInflater
 import android.databinding.adapters.TextViewBindingAdapter.setText
 import com.squareup.picasso.Picasso
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_USER_ID
 import jp.co.terraresta.androidlesson.data.model.profile_feed.ProfileFeedItem
 import jp.co.terraresta.androidlesson.view.activity.profile.ProfileDisplayActivity
 
@@ -56,6 +57,7 @@ class ProfileFeedAdapter(data: MutableList<ProfileFeedItem>, ctx: Context): Recy
 
         imageView?.setOnClickListener {
             var intent: Intent = Intent(this.context, ProfileDisplayActivity::class.java)
+            intent.putExtra(REQUEST_NAME_USER_ID, dataset[position].userId)
             this.context.startActivity(intent)
         }
     }

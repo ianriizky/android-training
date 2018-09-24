@@ -1,6 +1,280 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ScrollView
+        android:layout_marginBottom="65dp"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <FrameLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_photo_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/photo_profile_foreground"
+                    android:clickable="true"
+                    android:background="@drawable/photo_profile_gradient_foreground"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/nickname"
+                    android:textSize="@dimen/font_size_title"
+                    android:padding="@dimen/padding"
+                    android:textColor="@color/text_color_white"
+                    android:layout_gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
 
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/aboutme"
+                android:clickable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:orientation="vertical" android:showDividers="end" android:divider="@drawable/textview_divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:padding="@dimen/padding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_aboutme"
+                        android:inputType="textMultiLine"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_color_black"
+                        android:gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_margin="@dimen/margin"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Birth -->
+                <LinearLayout
+                    android:id="@+id/birthday"
+                    android:clickable="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:orientation="vertical" android:showDividers="end" android:divider="@drawable/textview_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:paddingBottom="@dimen/padding"
+                        android:paddingTop="@dimen/padding"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="@color/text_color_black"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="@string/profile_title_birthday"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/tv_birthday"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            android:scrollHorizontally="true"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Sex -->
+                <LinearLayout
+                    android:id="@+id/gender"
+                    android:clickable="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:orientation="vertical" android:showDividers="end" android:divider="@drawable/textview_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:paddingBottom="@dimen/padding"
+                        android:paddingTop="@dimen/padding"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="@color/text_color_black"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="@string/profile_title_gender"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/tv_gender"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            android:scrollHorizontally="true"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Occupation -->
+                <LinearLayout
+                    android:id="@+id/job"
+                    android:clickable="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:orientation="vertical" android:showDividers="end" android:divider="@drawable/textview_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:paddingBottom="@dimen/padding"
+                        android:paddingTop="@dimen/padding"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="@color/text_color_black"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="@string/profile_title_job"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/tv_job"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            android:scrollHorizontally="true"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Area -->
+                <LinearLayout
+                    android:id="@+id/residence"
+                    android:clickable="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:orientation="vertical" android:showDividers="end" android:divider="@drawable/textview_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:paddingBottom="@dimen/padding"
+                        android:paddingTop="@dimen/padding"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="@color/text_color_black"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="@string/profile_title_residence"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/tv_residence"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            android:scrollHorizontally="true"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Hobby -->
+                <LinearLayout
+                    android:id="@+id/hobby"
+                    android:clickable="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:orientation="vertical" android:showDividers="end" android:divider="@drawable/textview_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:paddingBottom="@dimen/padding"
+                        android:paddingTop="@dimen/padding"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="@color/text_color_black"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="@string/profile_title_hobby"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:inputType="textMultiLine"
+                            android:id="@+id/tv_hobby"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Personality -->
+                <LinearLayout
+                    android:id="@+id/personal"
+                    android:clickable="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:orientation="vertical" android:showDividers="end" android:divider="@drawable/textview_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:paddingBottom="@dimen/padding"
+                        android:paddingTop="@dimen/padding"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textColor="@color/text_color_black"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="@string/profile_title_personality"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/tv_personal"
+                            android:gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            android:scrollHorizontally="true"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/btn_send_message"
+        android:textColor="@color/text_color_white"
+        android:background="@drawable/button_primary_ripple"
+        android:textAllCaps="false"
+        android:text="@string/profile_display_send_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+</FrameLayout>
+

@@ -76,6 +76,7 @@ object Constants {
 
     //key
     val REQUEST_KEY_PROFILE_DATA = "profile_data"
+    val REQUEST_KEY_IMAGE_URL = "image_url"
 
     //Error signup
     val ERROR_INPUT_EMPTY = "This field required"

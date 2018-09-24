@@ -58,6 +58,13 @@
         <activity android:name=".view.activity.profile.ProfileDisplayActivity"
             android:label="@string/profile_display_title">
         </activity>
+        <activity android:name=".view.activity.media.PhotoViewerActivity"
+            android:theme="@style/AppThemeNoAction"
+            >
+        </activity>
+        <activity android:name=".view.activity.talk.TalkActivity"
+            android:theme="@style/AppThemeNoActionBase">
+        </activity>
     </application>
 
 </manifest>
