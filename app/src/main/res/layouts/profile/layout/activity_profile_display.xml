@@ -17,13 +17,24 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/iv_photo_profile"
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerCrop" />
+                    android:layout_height="200dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <uk.co.senab.photoview.PhotoView
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/iv_photo_profile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="@string/app_name"
+                            android:scaleType="centerCrop" />
+                    </RelativeLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:orientation="horizontal"
                     android:id="@+id/photo_profile_foreground"
@@ -270,7 +281,7 @@
     <Button
         android:id="@+id/btn_send_message"
         android:textColor="@color/text_color_white"
-        android:background="@drawable/button_primary_ripple"
+        android:background="@color/colorAccent"
         android:textAllCaps="false"
         android:text="@string/profile_display_send_message"
         android:layout_width="match_parent"

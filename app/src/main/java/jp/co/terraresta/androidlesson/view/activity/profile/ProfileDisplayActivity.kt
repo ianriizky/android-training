@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.squareup.picasso.Picasso
 
 import jp.co.terraresta.androidlesson.R
@@ -30,22 +31,40 @@ class ProfileDisplayActivity : AppCompatActivity(), ProfileDisplayContract.View 
 
     override fun setRess(data: ProfileDisplayData) {
         profileData = data
+
         if(data.imageId != 0) {
-            Picasso.with(this).load(data.imageUrl).into(iv_photo_profile)
+            Picasso.with(this)
+                    .load(data.imageUrl)
+                    .into(iv_photo_profile)
         }
         if(data.job != 0){
+            job.visibility = View.VISIBLE
             tv_job.text = arrJob!![data.job]
         }
         if(data.personality != 0){
+            personal.visibility = View.VISIBLE
             tv_personal.text = arrPersonal!![data.personality]
         }
         if(data.gender != 0){
+            gender.visibility = View.VISIBLE
             tv_gender.text = arrGender!![data.gender]
         }
 
-        tv_aboutme.text = data.aboutMe
-        tv_residence.text = data.residence
-        tv_birthday.text = data.birthday
+        if(data.aboutMe != ""){
+            aboutme.visibility = View.VISIBLE
+            tv_aboutme.text = data.aboutMe
+        }
+
+        if(data.residence != ""){
+            residence.visibility = View.VISIBLE
+            tv_residence.text = data.residence
+        }
+
+        if(data.birthday != null){
+            birthday.visibility = View.VISIBLE
+            tv_birthday.text = data.birthday
+        }
+
         setHobby(arrHobby!!, data)
         nickname.text = data.nickname
         loading?.dismiss()
@@ -87,12 +106,13 @@ class ProfileDisplayActivity : AppCompatActivity(), ProfileDisplayContract.View 
 
         iv_photo_profile.setImageResource(R.drawable.ic_android_black_24dp)
         nickname.text = ""
-        tv_job.text = ""
-        tv_birthday.text = ""
-        tv_gender.text = ""
-        tv_residence.text = ""
-        tv_personal.text = ""
-        tv_aboutme.text = ""
+        job.visibility = View.GONE
+        gender.visibility = View.GONE
+        gender.visibility = View.GONE
+        residence.visibility = View.GONE
+        personal.visibility = View.GONE
+        birthday.visibility = View.GONE
+        aboutme.visibility = View.GONE
 
         arrHobby = resources.getStringArray(R.array.hobby)
         arrGender = resources.getStringArray(R.array.sex)
@@ -118,7 +138,7 @@ class ProfileDisplayActivity : AppCompatActivity(), ProfileDisplayContract.View 
         var hobbyList= profileDisplayData?.hobby!!.replace(",", "")
         var tempHobby: Array<String>? = Array(arrHobby.size){""}
         val codeHobby = Array(arrHobby!!.size) {it}
-        tv_hobby.text = ""
+        hobby.visibility = View.GONE
 
         for(i in codeHobby.indices){
             if(hobbyList.length != 0){
@@ -129,6 +149,7 @@ class ProfileDisplayActivity : AppCompatActivity(), ProfileDisplayContract.View 
                 }
                 if(tempHobby!![i] == codeHobby[i].toString()){
                     tv_hobby.text = tv_hobby.text.toString().plus(arrHobby[i] +", ")
+                    hobby.visibility = View.VISIBLE
                 }
             }
         }

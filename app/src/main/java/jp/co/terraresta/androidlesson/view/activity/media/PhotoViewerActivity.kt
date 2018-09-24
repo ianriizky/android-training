@@ -27,7 +27,11 @@ class PhotoViewerActivity : AppCompatActivity() {
         var intent: Intent = intent
         imageUrl = intent.getStringExtra(REQUEST_KEY_IMAGE_URL)
 
-        Picasso.with(this).load(imageUrl).into(image_view)
+        if(imageUrl != null){
+            Picasso.with(this).load(imageUrl).into(image_view)
+        } else {
+            image_view.setImageResource(R.drawable.ic_android_white_24dp)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
