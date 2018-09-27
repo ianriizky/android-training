@@ -42,7 +42,7 @@ import java.util.*
  * Created by ooyama on 2017/05/29.
  */
 
-class MyPageFragment :  Fragment(), MyPageContract.View{
+class MyPageFragment :  android.support.v4.app.Fragment(), MyPageContract.View{
     override fun showError(msg: String) {
         alertError(msg)
         loading?.dismiss()
@@ -65,6 +65,7 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
         displayEmail?.text = data.email
         displayPass?.text = data.password
         loading?.dismiss()
+
     }
 
 
@@ -97,6 +98,7 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
     var photoFile: File? = null
     var photoUri: Uri? = null
 
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         myPageView= inflater?.inflate(R.layout.fragment_my_page, container, false)
@@ -107,11 +109,12 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
     fun initView(){
         myPagePresenter = MyPagePresenter(this.context, this)
         myPagePresenter?.fetchUserData()
+//        loader()
         editProfile = myPageView?.findViewById(R.id.btn_edit_profile) as Button
         deleteProfile = myPageView?.findViewById(R.id.ll_delete_account) as LinearLayout
         termsServices = myPageView?.findViewById(R.id.ll_terms) as LinearLayout
 
-        loader()
+//        loader()
         deleteProfile?.setOnClickListener {
             dialogMessageDel()
         }
@@ -288,7 +291,7 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
      * LOADER
       */
     fun loader() {
-        loading = ProgressDialog(this.context)
+        loading = ProgressDialog(activity)
         loading?.setMessage("Please Wait...")
         loading?.setCancelable(false)
         loading?.show()
@@ -298,7 +301,7 @@ class MyPageFragment :  Fragment(), MyPageContract.View{
      * ALERT ERROR
       */
     fun alertError(message: String) {
-        var alertError = AlertDialog.Builder(this.context).create()
+        var alertError = AlertDialog.Builder(activity).create()
         alertError?.setMessage(message)
         alertError?.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", DialogInterface.OnClickListener { dialogInterface, i ->
             alertError.dismiss()

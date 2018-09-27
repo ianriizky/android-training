@@ -48,7 +48,6 @@ class MyPagePresenter(ctx: Context, view: MyPageContract.View): MyPageContract.P
 
     override fun isSucessFetchUserData(ressData: ProfileDisplayData) {
         if(ressData.status == 1) {
-            println("NICKNAME: " +ressData.nickname)
             profileDisplayData = ressData
             myPageView.setFetchRess(ressData)
         } else {

@@ -3,8 +3,12 @@ package jp.co.terraresta.androidlesson.view.activity.common
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import jp.co.terraresta.androidlesson.view.fragment.my_page.MyPageFragment
+import jp.co.terraresta.androidlesson.view.fragment.profile_feed.ProfileFeedFragment
+import jp.co.terraresta.androidlesson.view.fragment.talk.TalkListFragment
 
 class MainTabFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
+
 
     var mFragmentTitleList: MutableList<String>? = mutableListOf<String>()
     var mFragmentList: MutableList<Fragment>? = mutableListOf<Fragment>()
@@ -14,16 +18,16 @@ class MainTabFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
         mFragmentTitleList?.add(title)
     }
 
-    override fun getItem(position: Int): Fragment {
-        return mFragmentList!!.get(position)
+    override fun getItem(position: Int): Fragment? {
+        return mFragmentList?.get(position)
     }
 
     override fun getCount(): Int {
         return mFragmentList!!.size
     }
 
-    override fun getPageTitle(position: Int): CharSequence {
-        return mFragmentTitleList!!.get(position)
+    override fun getPageTitle(position: Int): CharSequence? {
+        return mFragmentTitleList?.get(position)
     }
 
 }

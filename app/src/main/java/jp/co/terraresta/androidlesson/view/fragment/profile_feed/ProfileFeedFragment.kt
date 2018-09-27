@@ -53,8 +53,10 @@ override fun setRess(data: ProfileFeedData) {
     adapter?.notifyDataSetChanged()
 
     pullRefresher?.setRefreshing(false)
-    loadProgress!!.visibility = View.VISIBLE
+//    loadProgress!!.visibility = View.VISIBLE
+    loading?.dismiss()
 }
+
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -71,6 +73,7 @@ private var data: MutableList<ProfileFeedItem> = ArrayList()
 var loading: ProgressDialog? = null
 var feedView: View? = null
 
+
 override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     feedView = inflater?.inflate(R.layout.fragment_profile_feed, container, false)
     intialize()
@@ -78,9 +81,9 @@ override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, save
     }
 
     fun intialize(){
+
         profileFeedPresenter = ProfileFeedPresenter(this.context, this)
         profileFeedPresenter?.fetchProfileFeed()
-
         adapter  = ProfileFeedAdapter(data, this.context)
 
         pullRefresher = feedView?.findViewById(R.id.pull_refresh_container) as SwipeRefreshLayout
@@ -136,8 +139,8 @@ override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, save
     }
 
     fun loader() {
-        loading = ProgressDialog(this.context)
-        loading?.setMessage("Please Wait...")
+        loading = ProgressDialog(activity)
+        loading?.setMessage("Fetching Profile Feed...")
         loading?.setCancelable(false)
         loading?.show()
     }

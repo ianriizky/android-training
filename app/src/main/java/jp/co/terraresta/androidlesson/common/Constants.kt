@@ -20,7 +20,7 @@ object Constants {
     val SERVER_DOMAIN = "https://terraresta.com"
 
     // APIコントローラ名称
-    val API_CTRL_NAME_SIGN_UP = "SignUpCtrl"
+    val API_CTRL_NAME_SIGN_UP = "SignUpCtl"
     val API_CTRL_NAME_LOGIN = "LoginCtrl"
     val API_CTRL_NAME_PROFILE_FEED = "ProfileFeedCtrl"
     val API_CTRL_NAME_PROFILE = "ProfileCtrl"
@@ -58,6 +58,7 @@ object Constants {
     val REQUEST_NAME_IMAGE_ID = "image_id"
     val REQUEST_NAME_VIDEO_ID = "video_id"
     val REQUEST_NAME_DATA = "data"
+    val REQUEST_NAME_TALK_ID = "talk_ids"
     val REQUEST_NAME_BIRTHDAY = "birthday"
     val REQUEST_NAME_RESIDENCE = "residence"
     val REQUEST_NAME_JOB = "job"

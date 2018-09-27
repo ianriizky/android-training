@@ -52,6 +52,9 @@ android {
                     ]
         }
     }
+    realm {
+        syncEnabled = true;
+    }
 }
 
 dependencies {

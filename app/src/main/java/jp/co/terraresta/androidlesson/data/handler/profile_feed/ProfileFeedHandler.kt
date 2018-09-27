@@ -50,7 +50,6 @@ class ProfileFeedHandler: BaseHandler {
 
                         override fun onError(e: Throwable) {
                             e.stackTrace
-                            println("error retrofit: " +e)
                         }
 
                     })

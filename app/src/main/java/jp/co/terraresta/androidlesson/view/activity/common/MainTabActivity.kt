@@ -26,20 +26,19 @@ class MainTabActivity : AppCompatActivity(),  MainTabContract.View{
             setContentView(R.layout.activity_main_tab)
 
         setTabsView()
-        tabPresenter = MainTabPresenter(this)
-
     }
 
     fun setTabsView(){
         viewPager = findViewById(R.id.container) as ViewPager
-        tabs.setupWithViewPager(viewPager)
         var tabFragmentAdapter: MainTabFragmentAdapter = MainTabFragmentAdapter(supportFragmentManager)
 
         tabFragmentAdapter.addFragment(ProfileFeedFragment(), "Feed")
         tabFragmentAdapter.addFragment(TalkListFragment(), "Message")
         tabFragmentAdapter.addFragment(MyPageFragment(), "Mypage")
 
+        tabs.setupWithViewPager(viewPager)
         viewPager?.adapter = tabFragmentAdapter
+
 // Set icon tabs
         var icon:Array<Int> = arrayOf<Int> (
                 R.drawable.ic_collections_black_24dp,
