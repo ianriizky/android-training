@@ -81,7 +81,7 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
             saveDataRealm(data.items!!)
             talkListView.setRess(data.items!!)
         }else {
-            println("error API: " +data.errorData?.errorMessage!!)
+            talkListView.showError(data.errorData?.errorMessage!!)
         }
     }
 
