@@ -1,6 +1,7 @@
 package jp.co.terraresta.androidlesson.view.adapter.talk
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import jp.co.terraresta.androidlesson.R
 import jp.co.terraresta.androidlesson.data.model.talk.TalkListItem
+import jp.co.terraresta.androidlesson.view.activity.talk.TalkActivity
 
 /**
  * Created by ooyama on 2017/05/29.
@@ -42,7 +44,7 @@ class TalkListAdapter(data:MutableList<TalkListItem>, ctx: Context ): RecyclerVi
         val nickname = holder?.nickname
         val avatar = holder?.avatar
         val checkbox = holder?.checkItem
-        val item = holder?.item
+        val talkWrap = holder?.talkWrap
 
         if(checkItem){
             checkbox!!.visibility = View.VISIBLE
@@ -80,6 +82,11 @@ class TalkListAdapter(data:MutableList<TalkListItem>, ctx: Context ): RecyclerVi
         }else {
             avatar?.setImageResource(R.drawable.ic_android_black_24dp)
         }
+
+        talkWrap?.setOnClickListener {
+            var intent: Intent = Intent(this.context, TalkActivity::class.java)
+            this.context.startActivity(intent)
+        }
     }
 
     public fun getUserId(): ArrayList<String>{
@@ -95,14 +102,14 @@ class TalkListAdapter(data:MutableList<TalkListItem>, ctx: Context ): RecyclerVi
         var avatar: CircleImageView
         var nickname: TextView
         var message: TextView
-        var item: LinearLayout
+        var talkWrap: LinearLayout
         var checkItem: CheckBox
 
         init {
             this.avatar = itemView.findViewById(R.id.ci_avatar) as CircleImageView
             this.nickname = itemView.findViewById(R.id.tv_nickname) as TextView
             this.message = itemView.findViewById(R.id.tv_msg) as TextView
-            this.item = itemView.findViewById(R.id.ll_item) as LinearLayout
+            this.talkWrap = itemView.findViewById(R.id.ll_item) as LinearLayout
             checkItem = itemView.findViewById(R.id.cb_itemtalk) as CheckBox
 
             this.avatar.setImageResource(R.drawable.ic_android_black_24dp)

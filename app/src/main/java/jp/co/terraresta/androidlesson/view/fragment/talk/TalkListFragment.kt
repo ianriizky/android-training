@@ -87,14 +87,10 @@ class TalkListFragment : android.support.v4.app.Fragment(),  TalkListContract.Vi
         viewRecycler!!.layoutManager = layoutManager
 
         delTalk!!.setOnClickListener {
-            var strings: String = ""
             var userid: ArrayList<String> = adapter!!.getUserId()
-            for(i in userid.indices){
-                strings = strings.plus(userid[i] +", ")
-            }
-            if(strings != ""){
-                println("TALK ID: " +strings)
-                talkListPresnter?.delTalkList(strings)
+            if(userid.size != 0){
+                println("TALK ID: " +userid.joinToString())
+                talkListPresnter?.delTalkList(userid.joinToString())
                 loader()
             } else {
                alertError("Please check at least one your message")

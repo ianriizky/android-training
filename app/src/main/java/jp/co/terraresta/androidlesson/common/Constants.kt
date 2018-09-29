@@ -58,7 +58,7 @@ object Constants {
     val REQUEST_NAME_IMAGE_ID = "image_id"
     val REQUEST_NAME_VIDEO_ID = "video_id"
     val REQUEST_NAME_DATA = "data"
-    val REQUEST_NAME_TALK_ID = "talk_ids"
+    val REQUEST_NAME_TALK_IDS = "talk_ids"
     val REQUEST_NAME_BIRTHDAY = "birthday"
     val REQUEST_NAME_RESIDENCE = "residence"
     val REQUEST_NAME_JOB = "job"
