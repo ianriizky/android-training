@@ -45,7 +45,7 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
     private var talkListCtx: Context = ctx
     private var talkListView: TalkListContract.View = view
     var pref: Preferences = Preferences()
-    private var talkListHandler: TalkListHandler? = TalkListHandler(pref.getToken(talkListCtx), "", this)
+    private var talkListHandler: TalkListHandler? = null
     private var talkListDelHandler: DeleteTalkListHandler? = null
 
     // REALM CONFIG
@@ -58,6 +58,7 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
 
     // FETCHING TALK LIST
     override fun fetchTalkList() {
+            talkListHandler = TalkListHandler(pref.getToken(talkListCtx), "", this)
             talkListHandler?.fetchTalkListAction()
     }
 
