@@ -142,7 +142,6 @@ class MyPageFragment :  android.support.v4.app.Fragment(), MyPageContract.View{
         sheetTakePic = myPageView?.findViewById(R.id.sheet_take_photo) as LinearLayout
         sheetDelPic = myPageView?.findViewById(R.id.sheet_delete_photo) as LinearLayout
 
-
         // open up bottom sheet
         photoProfileAct?.setOnClickListener {
             if(photoProfileSheetBehavior?.state != BottomSheetBehavior.STATE_EXPANDED){

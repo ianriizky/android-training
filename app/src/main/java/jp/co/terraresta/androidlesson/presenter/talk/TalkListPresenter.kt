@@ -18,6 +18,19 @@ import kotlin.collections.ArrayList
  */
 
 class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListContract.Presenter{
+
+    override fun fetchTalkListRealm(msg: String) {
+        var realm = initRealm()
+        val talk = realm.where(TalkListItemRealm::class.java).findAll()
+        if(!talk.isEmpty()){
+            talkListView.setRess(fromRealmToList(talk.toList()))
+        } else {
+            talkListView.showError(msg)
+        }
+
+    }
+
+    // DELETE TALK LIST
     override fun isSuccessDelTalkList(data: BaseResultData) {
         if(data.status == 1){
             fetchTalkList()
@@ -45,13 +58,7 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
         return realm
     }
 
-    override fun fetchTalkListRealm(err: String) {
-        var realm = initRealm()
-        val talk = realm.where(TalkListItemRealm::class.java).findAll()
-        if(!talk.isEmpty()){
-            talkListView.setRess(fromRealmToList(talk.toList()))
-        }
-    }
+    // FETCHING TALK LIST
     override fun fetchTalkList() {
         var date = ""
             talkListHandler = TalkListHandler(pref.getToken(talkListCtx), date, this)
@@ -66,6 +73,7 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
             list[i].lastUpdateTime = listRealm[i].lastUpdateTime
             list[i].message = listRealm[i].message
             list[i].imageId = listRealm[i].imageId
+            list[i].talkId = listRealm[i].talkId!!
             list[i].imageUrl = listRealm[i].imageUrl
 //            println("lastlogin: " +listRealm[i].lastUpdateTime)
         }
@@ -76,10 +84,9 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
         if(data.status == 1) {
             saveDataRealm(data.items!!)
             talkListView.setRess(data.items!!)
+        }else {
+            println("error API: " +data.errorData?.errorMessage!!)
         }
-//        } else {
-////            talkListView.showError(data.errorData?.errorMessage!!)
-//        }
     }
 
     fun saveDataRealm(talkitem: List<TalkListItem>){

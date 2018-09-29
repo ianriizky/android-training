@@ -34,4 +34,6 @@ class TalkListItem {
     var time: String? = null
     @Expose
     var lastUpdateTime: String? = null
+    @Expose
+    var isSelected: Boolean? = false
 }

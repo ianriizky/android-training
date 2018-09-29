@@ -5,12 +5,14 @@ import android.app.Fragment
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.TextView
 
 import jp.co.terraresta.androidlesson.R
@@ -27,33 +29,33 @@ import kotlinx.android.synthetic.main.fragment_talk_list.*
  */
 
 class TalkListFragment : android.support.v4.app.Fragment(),  TalkListContract.View{
+    var loading: ProgressDialog? = null
     override fun setRess(data: List<TalkListItem> ) {
-//        for(i in data.indices){
-//            println("DATA NICKNAME: " +data[i].nickname)
-//            this.data!!.add(data[i])
-//
-//        }
-        adapter = TalkListAdapter(data, this.context)
-        viewRecycler?.adapter = adapter
-        adapter?.getChecked(false)
-        textBg?.visibility = View.GONE
-        talk_refresh.isRefreshing = false
+        dataTalk.clear()
+        for(i in data.indices){
+            dataTalk.add(data[i])
+        }
         adapter?.notifyDataSetChanged()
+        textBg?.visibility = View.GONE
+        talkLayout?.visibility = View.VISIBLE
+        talk_refresh.isRefreshing = false
+        loading?.dismiss()
     }
 
     override fun showError(msg: String) {
-        alertError(msg)
+        loading?.dismiss()
+        talk_refresh.isRefreshing = false
     }
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //    }
     var viewTalkList: View? = null
     var talkListPresnter: TalkListContract.Presenter? = null
-    var loading: ProgressDialog? = null
-    var data: List<TalkListItem>? = ArrayList()
+    var dataTalk: MutableList<TalkListItem> = ArrayList()
     var checkItem:Boolean  = false
     var textBg: TextView? = null
     var delTalk: Button? = null
+    var talkLayout: ConstraintLayout? = null
     var refreshTalkList: SwipeRefreshLayout? = null
     var menuItemEdit: MenuItem? = null
 
@@ -62,31 +64,42 @@ class TalkListFragment : android.support.v4.app.Fragment(),  TalkListContract.Vi
     var adapter: TalkListAdapter? = null
 
 
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         viewTalkList= inflater?.inflate(R.layout.fragment_talk_list, container, false)
 
-        talkListPresnter = TalkListPresenter(this.context, this)
-        talkListPresnter?.fetchTalkList()
-
-        textBg = viewTalkList?.findViewById(R.id.tv_default) as TextView
+        // init
+        textBg = viewTalkList?.findViewById(R.id.tv_talklist_default) as TextView
+        talkLayout = viewTalkList?.findViewById(R.id.constr_talklist) as ConstraintLayout
         delTalk = viewTalkList?.findViewById(R.id.btn_talk_delete) as Button
         refreshTalkList = viewTalkList?.findViewById(R.id.talk_refresh) as SwipeRefreshLayout
+        viewRecycler = viewTalkList?.findViewById(R.id.rv_profilefeed) as RecyclerView
+
+        talkListPresnter = TalkListPresenter(this.context, this)
+        talkListPresnter?.fetchTalkList()
+        adapter = TalkListAdapter(dataTalk, this.context)
 
         delTalk!!.visibility = View.GONE
+        talkLayout!!.visibility = View.GONE
 
-        viewRecycler = viewTalkList?.findViewById(R.id.rv_profilefeed) as RecyclerView
+        viewRecycler?.adapter = adapter
         layoutManager = LinearLayoutManager(this.context)
         viewRecycler!!.layoutManager = layoutManager
 
         delTalk!!.setOnClickListener {
-            var userid: ArrayList<String> = adapter!!.getUserId()
             var strings: String = ""
+            var userid: ArrayList<String> = adapter!!.getUserId()
             for(i in userid.indices){
                 strings = strings.plus(userid[i] +", ")
             }
-            talkListPresnter?.delTalkList(strings)
+            if(strings != ""){
+                println("TALK ID: " +strings)
+                talkListPresnter?.delTalkList(strings)
+                loader()
+            } else {
+               alertError("Please check at least one your message")
+            }
+            // reset checkbox, reset title menu button
             adapter?.getChecked(false)
             delTalk!!.visibility = View.GONE
             menuItemEdit?.title = "Edit"
@@ -104,8 +117,8 @@ class TalkListFragment : android.support.v4.app.Fragment(),  TalkListContract.Vi
 
     fun loader() {
         loading = ProgressDialog(activity)
-        loading?.setMessage("Fetching Profile Feed...")
         loading?.setCancelable(false)
+        loading?.setMessage("Deleting message...")
         loading?.show()
     }
 

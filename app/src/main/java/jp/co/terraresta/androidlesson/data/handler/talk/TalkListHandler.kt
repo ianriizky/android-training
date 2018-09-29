@@ -24,7 +24,6 @@ class TalkListHandler: BaseHandler{
     var presenter: TalkListPresenter? = null
 
     constructor(token: String, date: String, presenter: TalkListPresenter){
-        params?.clear()
         params?.put(REQUEST_NAME_ACCESS_TOKEN, token)
         params?.put(REQUEST_NAME_LAST_LOGIN_TIME, date)
         this.presenter = presenter
@@ -40,7 +39,6 @@ class TalkListHandler: BaseHandler{
     }
 
     fun delTalkListAction(talkid: String, token:String){
-        params?.clear()
         params?.put(REQUEST_NAME_TALK_ID, talkid)
         params?.put(REQUEST_NAME_ACCESS_TOKEN, token)
         try{
@@ -60,7 +58,7 @@ class TalkListHandler: BaseHandler{
 
                         override fun onError(e: Throwable) {
                             e.stackTrace
-                            presenter?.talkListView?.showError(e.message!!)
+                            presenter?.fetchTalkListRealm(e.message!!)
                         }
 
                     })
@@ -88,6 +86,7 @@ class TalkListHandler: BaseHandler{
 
                         override fun onError(e: Throwable) {
                             e.stackTrace
+                            println("error retrofit-talklist: " +e)
                             presenter?.fetchTalkListRealm(e.message!!)
                         }
 

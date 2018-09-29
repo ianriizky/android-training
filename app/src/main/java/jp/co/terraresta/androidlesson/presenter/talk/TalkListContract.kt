@@ -21,7 +21,7 @@ interface TalkListContract{
 
     interface Presenter{
         fun fetchTalkList()
-        fun fetchTalkListRealm(err: String)
+        fun fetchTalkListRealm(msg: String)
         fun delTalkList(talkids: String)
         fun isSuccessFetchTalkList(data: TalkListData)
         fun isSuccessDelTalkList(data: BaseResultData)

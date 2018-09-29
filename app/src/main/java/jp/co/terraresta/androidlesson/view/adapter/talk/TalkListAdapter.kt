@@ -18,14 +18,12 @@ import jp.co.terraresta.androidlesson.data.model.talk.TalkListItem
  * Created by ooyama on 2017/05/29.
  */
 
-class TalkListAdapter(data:List<TalkListItem>, ctx: Context ): RecyclerView.Adapter<TalkListAdapter.TalkListViewHolder>() {
+class TalkListAdapter(data:MutableList<TalkListItem>, ctx: Context ): RecyclerView.Adapter<TalkListAdapter.TalkListViewHolder>() {
 
     var dataset: List<TalkListItem> = data
     var context: Context = ctx
     var checkItem: Boolean = false
-    var checkbox: CheckBox? = null
     var arrayList: ArrayList<String> = ArrayList()
-    var arrIndex: Array<Int> = arrayOf()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TalkListViewHolder {
         val view = LayoutInflater.from(parent?.context)
@@ -39,32 +37,47 @@ class TalkListAdapter(data:List<TalkListItem>, ctx: Context ): RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: TalkListViewHolder?, position: Int) {
+        var itemList = dataset.get(position)
         val msg = holder?.message
         val nickname = holder?.nickname
         val avatar = holder?.avatar
-         checkbox = holder?.itemCheck
+        val checkbox = holder?.checkItem
         val item = holder?.item
 
-        if(checkedbox()){
+        if(checkItem){
             checkbox!!.visibility = View.VISIBLE
             var strings: String =""
-            checkbox!!.setOnCheckedChangeListener { compoundButton, b ->
+            // prevent replace the checkbox state after scrolling
+            checkbox?.setOnCheckedChangeListener(null)
+            // change state checkbox
+            checkbox?.isChecked = itemList.isSelected!!
+            checkbox?.setOnCheckedChangeListener { compoundButton, b ->
+                itemList.isSelected = b
                 if(compoundButton.isChecked){
-                    arrayList.add(dataset[position].talkId.toString())
+                    arrayList.add(itemList.talkId.toString())
                 } else {
-                   arrayList.remove(dataset[position].talkId.toString())
+                   arrayList.remove(itemList.talkId.toString())
                 }
             }
         } else {
-            checkbox!!.isChecked = false
+            // reset item checked
+            for(i in dataset.indices){
+                dataset[i].isSelected = false
+            }
+            //reset id talk string
+            arrayList.clear()
             checkbox!!.visibility = View.GONE
         }
 
-        nickname!!.text = dataset[position].nickname
-        msg!!.text = dataset[position].message
+
+        nickname!!.text = itemList.nickname
+        msg!!.text = itemList.message
         if(dataset[position].imageId != 0){
-            Picasso.with(this.context).load(dataset[position].imageUrl).into(avatar)
-        } else {
+            Picasso.with(this.context).load(itemList.imageUrl)
+                    .resize(100, 100)
+                    .centerInside()
+                    .into(avatar)
+        }else {
             avatar?.setImageResource(R.drawable.ic_android_black_24dp)
         }
     }
@@ -73,29 +86,27 @@ class TalkListAdapter(data:List<TalkListItem>, ctx: Context ): RecyclerView.Adap
         return arrayList
     }
 
-
-    public fun checkedbox(): Boolean{
-        return checkItem!!
+    public fun getChecked(checked: Boolean){
+        checkItem = checked
     }
-
-   public fun getChecked(checked: Boolean){
-       checkItem = checked
-   }
 
 
     class TalkListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var avatar: CircleImageView
         var nickname: TextView
         var message: TextView
-        var itemCheck: CheckBox
         var item: LinearLayout
+        var checkItem: CheckBox
 
         init {
             this.avatar = itemView.findViewById(R.id.ci_avatar) as CircleImageView
             this.nickname = itemView.findViewById(R.id.tv_nickname) as TextView
             this.message = itemView.findViewById(R.id.tv_msg) as TextView
-            this.itemCheck = itemView.findViewById(R.id.cb_itemtalk) as CheckBox
             this.item = itemView.findViewById(R.id.ll_item) as LinearLayout
+            checkItem = itemView.findViewById(R.id.cb_itemtalk) as CheckBox
+
+            this.avatar.setImageResource(R.drawable.ic_android_black_24dp)
+
         }
     }
 }
