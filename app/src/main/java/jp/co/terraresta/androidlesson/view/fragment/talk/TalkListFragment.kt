@@ -1,24 +1,19 @@
 package jp.co.terraresta.androidlesson.view.fragment.talk
 
 import android.app.AlertDialog
-import android.app.Fragment
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
 import android.widget.Button
-import android.widget.RelativeLayout
 import android.widget.TextView
 
 import jp.co.terraresta.androidlesson.R
-import jp.co.terraresta.androidlesson.data.model.talk.TalkListData
 import jp.co.terraresta.androidlesson.data.model.talk.TalkListItem
-import jp.co.terraresta.androidlesson.data.model.talk.TalkListItemRealm
 import jp.co.terraresta.androidlesson.presenter.talk.TalkListContract
 import jp.co.terraresta.androidlesson.presenter.talk.TalkListPresenter
 import jp.co.terraresta.androidlesson.view.adapter.talk.TalkListAdapter
@@ -29,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_talk_list.*
  */
 
 class TalkListFragment : android.support.v4.app.Fragment(),  TalkListContract.View{
-    var loading: ProgressDialog? = null
+    private var loading: ProgressDialog? = null
     override fun setRess(data: List<TalkListItem> ) {
         dataTalk.clear()
         for(i in data.indices){
@@ -49,17 +44,16 @@ class TalkListFragment : android.support.v4.app.Fragment(),  TalkListContract.Vi
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //    }
-    var viewTalkList: View? = null
+    private var viewTalkList: View? = null
     var talkListPresnter: TalkListContract.Presenter? = null
-    var dataTalk: MutableList<TalkListItem> = ArrayList()
-    var checkItem:Boolean  = false
-    var textBg: TextView? = null
-    var delTalk: Button? = null
-    var talkLayout: ConstraintLayout? = null
-    var refreshTalkList: SwipeRefreshLayout? = null
-    var menuItemEdit: MenuItem? = null
+    private var dataTalk: MutableList<TalkListItem> = ArrayList()
+    private var textBg: TextView? = null
+    private var delTalk: Button? = null
+    private var talkLayout: ConstraintLayout? = null
+    private var refreshTalkList: SwipeRefreshLayout? = null
+    private var menuItemEdit: MenuItem? = null
 
-    var viewRecycler: RecyclerView? = null
+    private var viewRecycler: RecyclerView? = null
     var layoutManager: RecyclerView.LayoutManager? = null
     var adapter: TalkListAdapter? = null
 
@@ -87,15 +81,15 @@ class TalkListFragment : android.support.v4.app.Fragment(),  TalkListContract.Vi
         viewRecycler!!.layoutManager = layoutManager
 
         delTalk!!.setOnClickListener {
-            var userid: ArrayList<String> = adapter!!.getUserId()
-            if(userid.size != 0){
-                println("TALK ID: " +userid.joinToString())
-                talkListPresnter?.delTalkList(userid.joinToString())
+            val userID: ArrayList<String> = adapter!!.getUserId()
+            if(userID.size != 0){
+                println("TALK ID: " +userID.joinToString())
+                talkListPresnter?.delTalkList(userID.joinToString())
                 loader()
             } else {
                alertError("Please check at least one your message")
             }
-            // reset checkbox, reset title menu button
+//             reset checkbox, reset title menu button
             adapter?.getChecked(false)
             delTalk!!.visibility = View.GONE
             menuItemEdit?.title = "Edit"
@@ -111,7 +105,7 @@ class TalkListFragment : android.support.v4.app.Fragment(),  TalkListContract.Vi
         return viewTalkList
     }
 
-    fun loader() {
+    private fun loader() {
         loading = ProgressDialog(activity)
         loading?.setCancelable(false)
         loading?.setMessage("Deleting message...")
@@ -121,8 +115,8 @@ class TalkListFragment : android.support.v4.app.Fragment(),  TalkListContract.Vi
     /*
      * ALERT ERROR
       */
-    fun alertError(message: String) {
-        var alertError = AlertDialog.Builder(this.context).create()
+    private fun alertError(message: String) {
+        val alertError = AlertDialog.Builder(this.context).create()
         alertError?.setMessage(message)
         alertError?.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", DialogInterface.OnClickListener { dialogInterface, i ->
             alertError.dismiss()
@@ -140,15 +134,16 @@ class TalkListFragment : android.support.v4.app.Fragment(),  TalkListContract.Vi
         menuItemEdit = item
         when(item?.itemId){
            R.id.edit_talklist -> {
-               val title = item!!.title
-               if (title.equals("Edit") ) {
+               delTalk?.visibility = View.VISIBLE
+               val title = item.title
+               if (title == "Edit") {
                    adapter?.getChecked(true)
-                   item!!.title = "Cancel"
+                   item.title = "Cancel"
                    delTalk?.visibility = View.VISIBLE
                } else {
                    adapter?.getChecked(false)
-                   item!!.title = "Edit"
                    delTalk?.visibility = View.GONE
+                   item.title = "Edit"
                }
                adapter?.notifyDataSetChanged()
            }

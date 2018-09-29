@@ -4,14 +4,12 @@ import android.content.Context
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import jp.co.terraresta.androidlesson.common.Preferences
+import jp.co.terraresta.androidlesson.data.handler.talk.DeleteTalkListHandler
 import jp.co.terraresta.androidlesson.data.handler.talk.TalkListHandler
 import jp.co.terraresta.androidlesson.data.model.common.BaseResultData
 import jp.co.terraresta.androidlesson.data.model.talk.TalkListData
-import jp.co.terraresta.androidlesson.data.model.talk.TalkListDataRealm
 import jp.co.terraresta.androidlesson.data.model.talk.TalkListItem
 import jp.co.terraresta.androidlesson.data.model.talk.TalkListItemRealm
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Created by ooyama on 2017/05/29.
@@ -20,7 +18,7 @@ import kotlin.collections.ArrayList
 class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListContract.Presenter{
 
     override fun fetchTalkListRealm(msg: String) {
-        var realm = initRealm()
+        val realm = initRealm()
         val talk = realm.where(TalkListItemRealm::class.java).findAll()
         if(!talk.isEmpty()){
             talkListView.setRess(fromRealmToList(talk.toList()))
@@ -33,40 +31,38 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
     // DELETE TALK LIST
     override fun isSuccessDelTalkList(data: BaseResultData) {
         if(data.status == 1){
-            fetchTalkList()
+           fetchTalkList()
         } else {
             talkListView.showError(data.errorData?.errorMessage!!)
         }
     }
 
     override fun delTalkList(talkids: String) {
-        talkListHandler?.delTalkListAction(talkids, pref.getToken(talkListCtx))
+        talkListDelHandler = DeleteTalkListHandler(pref.getToken(talkListCtx), talkids, this)
+        talkListDelHandler?.delTalkListAction()
     }
 
-    var talkListCtx: Context = ctx
-    var talkListItems: List<TalkListItem>? = null
-    var talkListView: TalkListContract.View = view
-    var talkListHandler: TalkListHandler? = null
+    private var talkListCtx: Context = ctx
+    private var talkListView: TalkListContract.View = view
     var pref: Preferences = Preferences()
+    private var talkListHandler: TalkListHandler? = TalkListHandler(pref.getToken(talkListCtx), "", this)
+    private var talkListDelHandler: DeleteTalkListHandler? = null
 
     // REALM CONFIG
-    fun initRealm():Realm {
+    private fun initRealm():Realm {
         Realm.init(talkListCtx)
         val config = RealmConfiguration.Builder()
                 .name("talklist.realm").build()
-        val realm = Realm.getInstance(config)
-        return realm
+        return Realm.getInstance(config)
     }
 
     // FETCHING TALK LIST
     override fun fetchTalkList() {
-        var date = ""
-            talkListHandler = TalkListHandler(pref.getToken(talkListCtx), date, this)
             talkListHandler?.fetchTalkListAction()
     }
 
-    fun fromRealmToList(listRealm:List<TalkListItemRealm>): List<TalkListItem>{
-        var list: MutableList<TalkListItem> = MutableList(listRealm.size){ TalkListItem()}
+    private fun fromRealmToList(listRealm:List<TalkListItemRealm>): List<TalkListItem>{
+        val list: MutableList<TalkListItem> = MutableList(listRealm.size){ TalkListItem()}
 
         for(i in listRealm.indices){
             list[i].nickname = listRealm[i].nickname
@@ -89,13 +85,13 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
         }
     }
 
-    fun saveDataRealm(talkitem: List<TalkListItem>){
+    private fun saveDataRealm(talkitem: List<TalkListItem>){
         try {
-            var realm = initRealm()
+            val realm = initRealm()
             realm.beginTransaction()
             realm.deleteAll()
             for(i in talkitem.indices){
-                var talklist = realm.createObject(TalkListItemRealm::class.java, talkitem[i].talkId)
+                val talklist = realm.createObject(TalkListItemRealm::class.java, talkitem[i].talkId)
             talklist.imageId =talkitem[i].imageId
             talklist.imageSize = talkitem[i].imageSize
             talklist.imageUrl = talkitem[i].imageUrl
@@ -112,7 +108,7 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
             }
             realm.commitTransaction()
         } catch(e: Exception){
-           println("ERROR REALM:  " +e)
+           println("ERROR REALM:  $e")
         }
     }
 

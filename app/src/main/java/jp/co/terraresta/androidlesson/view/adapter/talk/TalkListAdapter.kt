@@ -39,7 +39,7 @@ class TalkListAdapter(data:MutableList<TalkListItem>, ctx: Context ): RecyclerVi
     }
 
     override fun onBindViewHolder(holder: TalkListViewHolder?, position: Int) {
-        var itemList = dataset.get(position)
+        val itemList = dataset.get(position)
         val msg = holder?.message
         val nickname = holder?.nickname
         val avatar = holder?.avatar
@@ -48,12 +48,11 @@ class TalkListAdapter(data:MutableList<TalkListItem>, ctx: Context ): RecyclerVi
 
         if(checkItem){
             checkbox!!.visibility = View.VISIBLE
-            var strings: String =""
             // prevent replace the checkbox state after scrolling
-            checkbox?.setOnCheckedChangeListener(null)
+            checkbox.setOnCheckedChangeListener(null)
             // change state checkbox
-            checkbox?.isChecked = itemList.isSelected!!
-            checkbox?.setOnCheckedChangeListener { compoundButton, b ->
+            checkbox.isChecked = itemList.isSelected!!
+            checkbox.setOnCheckedChangeListener { compoundButton, b ->
                 itemList.isSelected = b
                 if(compoundButton.isChecked){
                     arrayList.add(itemList.talkId.toString())
@@ -84,16 +83,16 @@ class TalkListAdapter(data:MutableList<TalkListItem>, ctx: Context ): RecyclerVi
         }
 
         talkWrap?.setOnClickListener {
-            var intent: Intent = Intent(this.context, TalkActivity::class.java)
+            val intent = Intent(this.context, TalkActivity::class.java)
             this.context.startActivity(intent)
         }
     }
 
-    public fun getUserId(): ArrayList<String>{
+    fun getUserId(): ArrayList<String>{
         return arrayList
     }
 
-    public fun getChecked(checked: Boolean){
+    fun getChecked(checked: Boolean){
         checkItem = checked
     }
 

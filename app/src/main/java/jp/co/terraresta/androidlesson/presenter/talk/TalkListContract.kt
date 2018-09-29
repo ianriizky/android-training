@@ -34,12 +34,5 @@ interface TalkListContract{
                @Path("action") action: String,
                @QueryMap params: MutableMap<String, Any>
         ): Observable<TalkListData>
-
-        @GET("app/api/{controller}/{action}")
-        fun getTalkListDel(
-                @Path("controller") controller: String,
-                @Path("action") action: String,
-                @QueryMap params: MutableMap<String, Any>
-        ): Observable<BaseResultData>
     }
 }
