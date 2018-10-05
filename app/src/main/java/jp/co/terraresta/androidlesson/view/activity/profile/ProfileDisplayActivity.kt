@@ -11,6 +11,8 @@ import com.squareup.picasso.Picasso
 
 import jp.co.terraresta.androidlesson.R
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_KEY_IMAGE_URL
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_NICKNAME
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_TO_USER_ID
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_USER_ID
 import jp.co.terraresta.androidlesson.data.model.profile.ProfileDisplayData
 import jp.co.terraresta.androidlesson.presenter.profile.ProfileDisplayContract
@@ -36,6 +38,7 @@ class ProfileDisplayActivity : AppCompatActivity(), ProfileDisplayContract.View 
         if(data.imageId != 0) {
             Picasso.with(this)
                     .load(data.imageUrl)
+                    .resize(200,200)
                     .into(iv_photo_profile)
         }
         if(data.job != 0){
@@ -93,10 +96,12 @@ class ProfileDisplayActivity : AppCompatActivity(), ProfileDisplayContract.View 
 
     override fun onBackPressed() {
         super.onBackPressed()
+        finish()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         super.onBackPressed()
+        finish()
         return super.onSupportNavigateUp()
     }
 
@@ -127,6 +132,8 @@ class ProfileDisplayActivity : AppCompatActivity(), ProfileDisplayContract.View 
         }
         btn_send_message.setOnClickListener {
             var intent: Intent = Intent(this, TalkActivity::class.java)
+            intent.putExtra(REQUEST_NAME_TO_USER_ID, profileData?.userId)
+            intent.putExtra(REQUEST_NAME_NICKNAME, profileData?.nickname)
             startActivity(intent)
         }
 

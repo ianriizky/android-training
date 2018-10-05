@@ -111,7 +111,6 @@ override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, save
                     var lastItem = layout.findLastCompletelyVisibleItemPosition()
                     var current = layout.itemCount
                     if(current <= lastItem+2){
-
                         profileFeedPresenter?.fetchProfileNext()
                     }
 

@@ -1,21 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
     <android.support.v7.widget.Toolbar
-        app:title="Talk"
-        android:id="@+id/toolbar_photo_view"
+        android:id="@+id/toolbar_talk"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_scrollFlags="scroll|enterAlways">
     </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-</LinearLayout>
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/wrap"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/appbar"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/ll_chat_box"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_width="0dp">-->
+        <!--<TextView-->
+            <!--android:text="dsadjsaldjsalkdjsakl dsalkdjsakdj saldkjsa"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+
+    <!--</LinearLayout>-->
+
+        <android.support.v7.widget.RecyclerView
+            app:layout_constraintTop_toBottomOf="@id/appbar"
+            app:layout_constraintBottom_toTopOf="@+id/ll_chat_box"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/recycler_view_talk"
+            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:scrollbars="vertical">
+        </android.support.v7.widget.RecyclerView>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_chat_box"
+        android:background="@color/colorWhite"
+        android:padding="4dp"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        <ImageButton
+            android:id="@+id/image_button_add_media"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_add_black_24dp"
+            android:padding="8dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+       <EditText
+           android:id="@+id/edit_text_message"
+           android:layout_marginRight="@dimen/chat_bubble_margin"
+           android:layout_marginLeft="@dimen/chat_bubble_margin"
+           android:layout_gravity="center_vertical"
+           android:background="@android:color/transparent"
+           android:hint="@string/profile_display_send_message"
+           android:scrollbars="vertical"
+           android:gravity="top|left"
+           android:maxLines="3"
+           android:layout_weight="4"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/linear_layout_send"
+            android:clickable="true"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="@dimen/font_size_normal"
+                android:textColor="@color/colorAccent"
+                android:text="@string/talk_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

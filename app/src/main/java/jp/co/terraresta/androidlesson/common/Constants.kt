@@ -69,6 +69,7 @@ object Constants {
 
     // common
     val REQUEST_CODE_CAMERA_ACTIVITY = 1034
+    val REQUEST_CODE_VID_ACTIVITY = 1033
     val REQUEST_CODE_GALLERY_ACTIVITY = 1035
     val REQUEST_CODE_PROFILE_EDIT = 1002
     val REQUEST_CODE_WRITE_STORAGE = 1036
@@ -78,6 +79,7 @@ object Constants {
     //key
     val REQUEST_KEY_PROFILE_DATA = "profile_data"
     val REQUEST_KEY_IMAGE_URL = "image_url"
+    val REQUEST_KEY_VIDEO_URL = "video_url"
 
     //Error signup
     val ERROR_INPUT_EMPTY = "This field required"

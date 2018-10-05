@@ -8,11 +8,10 @@
     <!-- Camera and storage permission -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
-   <uses-permission android:name="android.permission.CAMERA" />
-    <!--<uses-feature android:name="android.hardware.camera" android:required="true"/>-->
-    <!--<uses-feature android:name="android.hardware.camera.autofocus" />-->
-
+    <!-- <uses-feature android:name="android.hardware.camera" android:required="true"/> -->
+    <!-- <uses-feature android:name="android.hardware.camera.autofocus" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,7 +19,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="jp.co.terraresta.androidlesson.fileprovider"
@@ -55,15 +53,21 @@
             android:name=".view.activity.profile.ProfileEditActivity"
             android:label="@string/edit_profile_title">
         </activity>
-        <activity android:name=".view.activity.profile.ProfileDisplayActivity"
+        <activity
+            android:name=".view.activity.profile.ProfileDisplayActivity"
             android:label="@string/profile_display_title">
         </activity>
-        <activity android:name=".view.activity.media.PhotoViewerActivity"
-            android:theme="@style/AppThemeNoAction"
-            >
+        <activity
+            android:name=".view.activity.media.PhotoViewerActivity"
+            android:theme="@style/AppThemeNoAction">
         </activity>
-        <activity android:name=".view.activity.talk.TalkActivity"
+        <activity
+            android:name=".view.activity.talk.TalkActivity"
             android:theme="@style/AppThemeNoActionBase">
+        </activity>
+        <activity
+            android:name=".view.activity.media.VideoViewerActivity"
+            android:theme="@style/AppThemeNoAction">
         </activity>
     </application>
 

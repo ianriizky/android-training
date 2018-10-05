@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/margin"
+    android:layout_marginRight="@dimen/margin"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/msg_talk_out"
+        android:textColor="@color/text_color_black"
+        android:layout_marginLeft="@dimen/chat_bubble_margin"
+        android:layout_marginTop="@dimen/chat_bubble_margin"
+        android:paddingLeft="@dimen/chat_bubble_padding"
+        android:paddingTop="@dimen/chat_bubble_padding"
+        android:paddingBottom="@dimen/chat_bubble_padding"
+        android:paddingRight="@dimen/padding"
+        android:layout_alignParentRight="true"
+        android:maxWidth="@dimen/chat_bubble_max_width"
+        android:background="@drawable/chat_bubble_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:id="@+id/time_talk_out"
+        android:layout_marginLeft="@dimen/chat_bubble_margin"
+        android:layout_alignBottom="@id/msg_talk_out"
+        android:layout_toLeftOf="@id/msg_talk_out"
+        android:text="20:2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
+

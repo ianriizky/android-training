@@ -13,6 +13,8 @@ import android.widget.Toast
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import jp.co.terraresta.androidlesson.R
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_NICKNAME
+import jp.co.terraresta.androidlesson.common.Constants.REQUEST_NAME_TO_USER_ID
 import jp.co.terraresta.androidlesson.data.model.talk.TalkListItem
 import jp.co.terraresta.androidlesson.view.activity.talk.TalkActivity
 
@@ -84,6 +86,8 @@ class TalkListAdapter(data:MutableList<TalkListItem>, ctx: Context ): RecyclerVi
 
         talkWrap?.setOnClickListener {
             val intent = Intent(this.context, TalkActivity::class.java)
+            intent.putExtra(REQUEST_NAME_TO_USER_ID, dataset[position].toUserId)
+            intent.putExtra(REQUEST_NAME_NICKNAME, dataset[position].nickname)
             this.context.startActivity(intent)
         }
     }

@@ -37,7 +37,6 @@ class ImageUploadHandler: BaseHandler {
     }
 
     fun uploadImageAction() {
-        println("Location: " +params?.get(REQUEST_NAME_LOCATION))
         try {
             getImageUploadServices()?.postImage(API_CTRL_NAME_MEDIA, API_ACTION_NAME_IMAGE_UPLOAD, params!!, imageData!!)
                     ?.subscribeOn(Schedulers.newThread())

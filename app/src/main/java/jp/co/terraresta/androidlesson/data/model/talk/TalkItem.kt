@@ -28,4 +28,8 @@ class TalkItem {
     var time: String? = null
     @Expose
     var messageKind: Int = 0
+    @Expose
+    var imageId: Int = 0
+    @Expose
+    var imageUrl: String? = null
 }
