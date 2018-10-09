@@ -1,6 +1,7 @@
 package jp.co.terraresta.androidlesson.view.activity.talk
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.ProgressDialog
 import android.content.ContentResolver
 import android.content.Intent
@@ -30,6 +31,7 @@ import android.databinding.adapters.TextViewBindingAdapter.setText
 import android.content.DialogInterface
 import android.net.Uri
 import android.os.Environment
+import android.provider.DocumentsContract
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AlertDialog
 import android.webkit.MimeTypeMap
@@ -222,10 +224,34 @@ class TalkActivity : AppCompatActivity(), TalkContract.View {
 
     private fun openGallery(){
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/* video/*"
+        intent.type = "*/*"
+        val strings = arrayOf("image/*", "video/*")
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, strings)
         startActivityForResult(intent, REQUEST_CODE_GALLERY_ACTIVITY)
     }
 
+//    @TargetApi(Build.VERSION_CODES.KITKAT)
+//    fun getPath(uri: Uri): String? {
+//        // Will return "image:x*"
+//        val wholeID = DocumentsContract.getDocumentId(uri)
+//// Split at colon, use second item in the array
+//        val id = wholeID.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+//        val column = arrayOf(MediaStore.Video.Media.DATA)
+//// where id is equal to
+//        val sel = MediaStore.Video.Media._ID + "=?"
+//        val cursor = contentResolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+//                column, sel, arrayOf(id), null)
+//
+//        var filePath = ""
+//        val columnIndex = cursor!!.getColumnIndex(column[0])
+//
+//        if (cursor.moveToFirst()) {
+//            filePath = cursor.getString(columnIndex)
+//        }
+//
+//        cursor.close()
+//        return filePath
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(resultCode == RESULT_OK){
@@ -257,12 +283,15 @@ class TalkActivity : AppCompatActivity(), TalkContract.View {
                     type = 0
                 }
                 talkPresenter?.upGaleMedia(uri!!, type)
+//                val tempuri = getPath(uri!!)
+//                println("uri: $uri")
             }
         } else {
             return
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
+
 
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

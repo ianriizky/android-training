@@ -18,9 +18,11 @@ class TalkPresenter(ctx: Context, view: TalkActivity): TalkContract.Presenter{
     override fun uploadMedia(mediaId: Int, type: Int) {
         sendMessageHandler = SendMessageHandler(pref.getToken(talkCtx), touserId!!, "", this)
         if(type == 0){
-            sendMessageHandler?.sendMessageAction(videoId!!, mediaId)
+            // upload image to server
+            sendMessageHandler?.sendMessageAction(0, mediaId)
         } else {
-            sendMessageHandler?.sendMessageAction(mediaId, imageId!!)
+            // upload video to server
+            sendMessageHandler?.sendMessageAction(mediaId, 0)
         }
     }
 
@@ -39,8 +41,10 @@ class TalkPresenter(ctx: Context, view: TalkActivity): TalkContract.Presenter{
         mediaPresenter = MediaUploadPresenter(talkCtx, pref)
         when(type){
             0 ->
+                // image upload
                 mediaPresenter?.uploadGaleMediaTalk(uri, 0, this)
             1 ->
+                // video upload
                 mediaPresenter?.uploadGaleMediaTalk(uri, 1, this)
         }
     }

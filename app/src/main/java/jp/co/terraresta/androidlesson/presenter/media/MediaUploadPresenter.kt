@@ -39,6 +39,7 @@ class MediaUploadPresenter(ctx: Context, pref: Preferences):MediaUploadContract.
     override fun uploadGaleMediaTalk(uri: Uri, type: Int, presenter: TalkPresenter) {
         talkPresenter = presenter
         val file = File(getRealPath(uri))
+//        println("file uri: $file")
         when(type){
             0 ->{ uploadMediaTalk(file, 0)
             }
