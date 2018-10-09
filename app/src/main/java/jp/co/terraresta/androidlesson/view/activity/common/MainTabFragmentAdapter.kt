@@ -9,7 +9,6 @@ import jp.co.terraresta.androidlesson.view.fragment.talk.TalkListFragment
 
 class MainTabFragmentAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
-
     var mFragmentTitleList: MutableList<String>? = mutableListOf<String>()
     var mFragmentList: MutableList<Fragment>? = mutableListOf<Fragment>()
 

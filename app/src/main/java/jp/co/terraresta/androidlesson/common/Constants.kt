@@ -17,7 +17,7 @@ object Constants {
     val USERNAME_PATTERN = Pattern.compile("^[a-zA-Z0-9]{1,20}$")
 
     // NOTE:通常はドメインを指定してください。
-    val SERVER_DOMAIN = "https://terraresta.com"
+    val SERVER_DOMAIN = "http://terraresta.com"
 
     // APIコントローラ名称
     val API_CTRL_NAME_SIGN_UP = "SignUpCtl"

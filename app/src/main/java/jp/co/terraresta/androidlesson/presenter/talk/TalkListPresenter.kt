@@ -79,8 +79,10 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
 
     override fun isSuccessFetchTalkList(data: TalkListData) {
         if(data.status == 1) {
-            saveDataRealm(data.items!!)
-            talkListView.setRess(data.items!!)
+            if(data.items != null){
+                saveDataRealm(data.items!!)
+                talkListView.setRess(data.items!!)
+            }
         }else {
             talkListView.showError(data.errorData?.errorMessage!!)
         }
