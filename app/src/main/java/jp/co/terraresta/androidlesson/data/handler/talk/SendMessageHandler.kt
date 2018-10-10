@@ -57,6 +57,7 @@ class SendMessageHandler(token: String, touserid: Int, msg: String, presenter: T
                        override fun onError(e: Throwable) {
                            e.stackTrace
                            println("error retrofit send message: $e")
+                           talkpresenter.talkView.showError(e.message!!)
                        }
 
                    })

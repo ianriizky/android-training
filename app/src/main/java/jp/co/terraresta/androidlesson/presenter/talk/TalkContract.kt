@@ -14,6 +14,7 @@ import retrofit2.http.*
 interface TalkContract {
     interface View {
         fun setRess(data: List<TalkItem>)
+        fun showError(msg: String)
     }
     interface Presenter {
         fun isSuccessFetchTalk(data: TalkData)
@@ -23,7 +24,7 @@ interface TalkContract {
         fun uploadMedia(mediaId: Int, type: Int)
         fun sendMessage(msg: String)
         fun isSuccessSendMessage(data: SendMessageData)
-        fun fetchTalkOld(howToReq: Int)
+        fun fetchTalkRealm(msg: String)
     }
     interface Services {
         @GET("app/api/{controller}/{action}")

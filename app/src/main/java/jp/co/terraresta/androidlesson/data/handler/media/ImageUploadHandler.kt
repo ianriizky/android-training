@@ -54,7 +54,7 @@ class ImageUploadHandler: BaseHandler {
 
                         override fun onError(e: Throwable) {
                             e.stackTrace
-                            println("error retrofit: " +e)
+                            mediaUploadPresenter?.isUploadMediaSuccess(e.message!!)
                         }
 
                     })

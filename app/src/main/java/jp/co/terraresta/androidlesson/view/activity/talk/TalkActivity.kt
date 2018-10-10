@@ -46,6 +46,11 @@ import java.text.SimpleDateFormat
  */
 
 class TalkActivity : AppCompatActivity(), TalkContract.View {
+    override fun showError(msg: String) {
+        loading?.dismiss()
+        alertError(msg)
+    }
+
     override fun setRess(data: List<TalkItem> ) {
             dataTalk.clear()
         for(i in data.indices){
@@ -158,6 +163,14 @@ class TalkActivity : AppCompatActivity(), TalkContract.View {
         loading?.setMessage("uploading media...")
         loading?.setCancelable(false)
         loading?.show()
+    }
+    fun alertError(message: String) {
+        var alertError = AlertDialog.Builder(this).create()
+        alertError?.setMessage(message)
+        alertError?.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", DialogInterface.OnClickListener { dialogInterface, i ->
+            alertError.dismiss()
+        })
+        alertError.show()
     }
 
     // CHOOSE CAMERA ACTION PHOTO OR VIDEO

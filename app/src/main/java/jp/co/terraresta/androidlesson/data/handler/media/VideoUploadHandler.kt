@@ -48,7 +48,7 @@ class VideoUploadHandler(token: String, data:MultipartBody.Part, presenter: Medi
 
                        override fun onError(e: Throwable) {
                            e.stackTrace
-                           println("error retrofit video upload: $e")
+                           presenter.isUploadMediaSuccess(e.message!!)
                        }
 
                    })

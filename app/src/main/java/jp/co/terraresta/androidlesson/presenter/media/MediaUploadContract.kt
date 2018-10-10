@@ -27,6 +27,7 @@ interface MediaUploadContract {
         fun uploadGaleMediaTalk(uri: Uri, type: Int, presenter: TalkPresenter)
         fun isUploadImageSuccess(data: ImageUploadData)
         fun isUpladoVideoSuccess(data: VideoUploadData)
+        fun isUploadMediaSuccess(msg:String)
     }
 
     interface  Services {

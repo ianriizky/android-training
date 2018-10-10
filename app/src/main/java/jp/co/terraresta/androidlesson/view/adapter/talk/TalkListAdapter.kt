@@ -84,6 +84,7 @@ class TalkListAdapter(data:MutableList<TalkListItem>, ctx: Context ): RecyclerVi
             avatar?.setImageResource(R.drawable.ic_android_black_24dp)
         }
 
+
         talkWrap?.setOnClickListener {
             val intent = Intent(this.context, TalkActivity::class.java)
             intent.putExtra(REQUEST_NAME_TO_USER_ID, dataset[position].toUserId)

@@ -36,6 +36,14 @@ import jp.co.terraresta.androidlesson.presenter.talk.TalkPresenter
  */
 
 class MediaUploadPresenter(ctx: Context, pref: Preferences):MediaUploadContract.Presenter {
+    override fun isUploadMediaSuccess(msg: String) {
+        if(location == "Profile"){
+           myPagePresenter?.myPageView?.showError(msg)
+        } else {
+           talkPresenter?.talkView?.showError(msg)
+        }
+    }
+
     override fun uploadGaleMediaTalk(uri: Uri, type: Int, presenter: TalkPresenter) {
         talkPresenter = presenter
         val file = File(getRealPath(uri))
@@ -129,7 +137,7 @@ class MediaUploadPresenter(ctx: Context, pref: Preferences):MediaUploadContract.
         if(data.status == 1){
             talkPresenter?.uploadMedia(data.videoId, 1)
         } else {
-
+            talkPresenter?.talkView?.showError(data.errorData?.errorMessage!!)
         }
 
     }
@@ -142,7 +150,11 @@ class MediaUploadPresenter(ctx: Context, pref: Preferences):MediaUploadContract.
                 talkPresenter?.uploadMedia(data.imageId, 0)
             }
         } else {
-            myPagePresenter?.myPageView?.showError(data.errorData?.errorMessage!!)
+            if(location == "Profile"){
+                myPagePresenter?.myPageView?.showError(data.errorData?.errorMessage!!)
+            } else {
+                talkPresenter?.talkView?.showError(data.errorData?.errorMessage!!)
+            }
         }
     }
 

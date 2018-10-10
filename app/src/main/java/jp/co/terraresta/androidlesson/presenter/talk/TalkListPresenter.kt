@@ -52,7 +52,7 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
     private fun initRealm():Realm {
         Realm.init(talkListCtx)
         val config = RealmConfiguration.Builder()
-                .name("talklist.realm").build()
+                .name("talk.realm").build()
         return Realm.getInstance(config)
     }
 
@@ -71,6 +71,7 @@ class TalkListPresenter(ctx: Context, view: TalkListContract.View): TalkListCont
             list[i].message = listRealm[i].message
             list[i].imageId = listRealm[i].imageId
             list[i].talkId = listRealm[i].talkId!!
+            list[i].toUserId = listRealm[i].toUserId
             list[i].imageUrl = listRealm[i].imageUrl
 //            println("lastlogin: " +listRealm[i].lastUpdateTime)
         }

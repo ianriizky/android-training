@@ -52,6 +52,8 @@ class TalkHandler(token: String, toUserId: Int, borderMessage: Int, presenter: T
 
                         override fun onError(e: Throwable) {
                             e.stackTrace
+                            println("error retrofit - talkhandler ${e.message}")
+                            presenter.fetchTalkRealm(e.message!!)
                         }
 
                     })
