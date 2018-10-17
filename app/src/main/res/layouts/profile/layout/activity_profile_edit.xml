@@ -16,14 +16,6 @@
     android:layout_margin="@dimen/margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/edit_toolbar"-->
-        <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="?attr/actionBarSize"-->
-    <!--app:layout_scrollFlags="scroll|enterAlways"-->
-    <!--app:title="@string/app_name"-->
-        <!--&gt;-->
-    <!--</android.support.v7.widget.Toolbar>-->
 
     <LinearLayout
         android:orientation="vertical"
@@ -188,7 +180,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />>
             </LinearLayout>
-        </LinearLayout>
+        </LinearLayout> 
 
         <!-- Hobby -->
         <LinearLayout
@@ -244,7 +236,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:text="@{profileModel.personality}"
+                    android:text="@={profileModel.personality}"
                     android:id="@+id/tv_personal"
                     android:gravity="center_vertical"
                     android:layout_weight="1"

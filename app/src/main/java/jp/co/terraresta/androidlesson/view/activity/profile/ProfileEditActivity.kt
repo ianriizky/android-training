@@ -26,6 +26,7 @@ import java.util.*
 import android.databinding.adapters.TextViewBindingAdapter.setText
 import android.text.BoringLayout
 import android.widget.DatePicker
+import jp.co.terraresta.androidlesson.BR
 import jp.co.terraresta.androidlesson.common.Constants.REQUEST_KEY_PROFILE_DATA
 import jp.co.terraresta.androidlesson.data.model.common.BaseResultData
 import jp.co.terraresta.androidlesson.databinding.ActivityProfileEditBinding
@@ -153,6 +154,7 @@ class ProfileEditActivity : AppCompatActivity(), ProfileEditContract.View {
         profileViewModel = ProfileEditViewModel()
         profileViewModel!!.nickname = profileDisplayData?.nickname!!
         profileViewModel!!.aboutme = profileDisplayData?.aboutMe!!
+
         // intialize birthday data
         if(profileDisplayData?.birthday != null) {
             if(profileDisplayData?.birthday != finaldate){
